@@ -1,1 +1,1 @@
-# ToDo
+This app will contain two pages: with projects and with drag-n-dropable tasks. It also will create projects, create tasks, navigate from projects to tasks and back, edit tasks and projects, search tasks, add comments and files to tasks and save data in localStorage. Due to limitations for memory in localStorage files won't be saved.
