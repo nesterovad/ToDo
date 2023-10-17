@@ -1,0 +1,21 @@
+.taskPreview{
+    width: 90%;
+    height: 60px;
+    border: 1px solid lavender;
+    margin-left: 5%;
+}
+
+.taskHeader{
+    color:rebeccapurple;
+    margin-left: 1%;
+}
+
+.column{
+    height: 100%;
+    width: 100%;
+}
+
+.columnName{
+    color: rebeccapurple;
+    margin-left: 5%;
+}
