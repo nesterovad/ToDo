@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import { Column, TaskPreview } from "../components";
 
@@ -7,36 +9,34 @@ import { shortTasks } from "../testData";
 import './pages.css';
 
 export default function TasksPage(){
+    const [tasks, setTasks] = useState(shortTasks);
 
-    function previewTasks(status){
-        return (
-            <>
-                {shortTasks.filter(i => i.status.toUpperCase() === status.toUpperCase()).map(item =>
-                        <TaskPreview task = {item} />
-                    )}
-            </>
-        )
+    function updateTasks(newTasks){
+        setTasks(newTasks);
+       // console.log(tasks);
     }
 
     return (
         <>
-            <div className="wrapper">
-                <div className="col">
-                    <Column name = 'New' >
-                        {previewTasks('new')}  
-                    </Column>
-                </div>
-                <div className="col">
-                    <Column name = 'In progress'>
-                        {previewTasks('In propgress')}
-                    </Column>
-                </div>
-                <div className="col">
-                    <Column name = 'Done'>
-                        {previewTasks('Done')}
-                    </Column>
-                </div>
-            </div>  
+            <DndProvider backend={HTML5Backend}>
+                <div className="wrapper">
+                    <div className="col">
+                        <Column name = 'New' tasks={tasks} update={updateTasks}>
+                            
+                        </Column>
+                    </div>
+                    <div className="col">
+                        <Column name = 'In progress' tasks={tasks} update={updateTasks}>
+                            
+                        </Column>
+                    </div>
+                    <div className="col">
+                        <Column name = 'Done' tasks={tasks} update={updateTasks}>
+                            
+                        </Column>
+                    </div>
+                </div>  
+            </DndProvider>
         </>
     )
 }
