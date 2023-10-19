@@ -4,40 +4,37 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import { Column, TaskModal} from "../components";
 
-import { shortTasks, tasks } from "../testData";
+import { tasks } from "../testData";
 
 import './pages.css';
 
 export default function TasksPage(){
-    const [ptasks, setPTasks] = useState(shortTasks);
     const [fullTasks, setFullTasks] = useState(tasks);
-    const [showTask, setShowTask] = useState(true);
+    const [showTask, setShowTask] = useState(false);
+    const [showId, setShowId] = useState();
 
     function updateTasks(newTasks){
-        setPTasks(newTasks);
+        setFullTasks(newTasks);
+    }
 
-       // console.log(tasks);
+    function onToTask(id){
+        setShowId(id);
+        setShowTask(true);
     }
 
     return (
         <>
-            <TaskModal showTask = {showTask} task={fullTasks[0]} onClose = {() => setShowTask(false)} />
+            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
                     <div className="col">
-                        <Column name = 'New' tasks={ptasks} update={updateTasks}>
-                            
-                        </Column>
+                        <Column name = 'New' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'In progress' tasks={ptasks} update={updateTasks}>
-                            
-                        </Column>
+                        <Column name = 'In progress' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'Done' tasks={ptasks} update={updateTasks}>
-                            
-                        </Column>
+                        <Column name = 'Done' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
                     </div>
                 </div>  
             </DndProvider>

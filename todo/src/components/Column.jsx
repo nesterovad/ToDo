@@ -22,16 +22,13 @@ export default function Column(props){
         updatedTask[0].status = newStatus;
         tmp.push(updatedTask[0]);
         props.update(tmp);
-       // setTasks(tmp);
-        console.log(tasks);
-        
     }
 
     function previewTasks(status){
         return (
             <>
                 {tasks.filter(i => i.status.toUpperCase() === status.toUpperCase()).map(item =>
-                        <TaskPreview task = {item} />
+                        <TaskPreview task = {item} toTask={props.toTask}/>
                     )}
             </>
         )

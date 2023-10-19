@@ -12,8 +12,12 @@ export default function TaskPreview(props){
         })
     }))
 
+    function toTask(){
+        props.toTask(props.task.id);
+    }
+
     return (
-        <div className="taskPreview" ref={drag}>
+        <div className="taskPreview" ref={drag} onClick={toTask}>
             <h4 className="taskHeader">{props.task.name}</h4>
         </div>
     )

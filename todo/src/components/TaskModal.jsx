@@ -5,6 +5,9 @@ import Modal from "./Modal";
 import './styles.css';
 
 export default function TaskModal(props){
+    if(!props.showTask){
+        return null;
+    }else{
 
     function renderDate(){
         if(props.task.endDate){
@@ -49,4 +52,5 @@ export default function TaskModal(props){
             {renderInWork()}
         </Modal>
     )
+}
 }
