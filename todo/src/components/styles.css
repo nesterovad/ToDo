@@ -20,3 +20,25 @@
     color: rebeccapurple;
     margin-left: 5%;
 }
+
+.background{
+    width: 100dvw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 0;
+    position: absolute;
+    top: 50px;
+}
+
+.modal{
+    width: 40dvw;
+    min-width: 300px;
+    min-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 10;
+    position: fixed;
+    left: 30dvw;
+    top: 10dvh;
+    background-color: whitesmoke;
+}
