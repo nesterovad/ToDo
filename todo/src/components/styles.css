@@ -42,3 +42,8 @@
     top: 10dvh;
     background-color: whitesmoke;
 }
+
+.text{
+    margin-left: 5dvw;
+    color:darkgray;
+}
