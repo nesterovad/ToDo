@@ -8,25 +8,25 @@ export default function TaskModal(props){
     if(!props.showTask){
         return null;
     }else{
-
+      
     function renderDate(){
         if(props.task.endDate){
             if(props.task.startDate){
                 return (
-                    <p className="text">{props.task.startDate} - {props.task.endDate}</p>
+                    <p className="text">{props.task.startDate.toString()} - {props.task.endDate.toString()}</p>
                 )
             }else{
                 return (
-                    <p className="text">{props.task.createDate} - {props.task.endDate}</p>
+                    <p className="text">{props.task.createDate.toString()} - {props.task.endDate.toString()}</p>
                 )
             }
         }else if(props.task.startDate){
             return (
-                <p className="text">{props.task.startDate}</p>
+                <p className="text">{props.task.startDate.toString()}</p>
             )
         }else{
             return (
-                <p className="text">{props.task.createDate}</p>
+                <p className="text">{props.task.createDate.toString()}</p>
             )
         }
     }
