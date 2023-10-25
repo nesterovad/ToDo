@@ -18,7 +18,11 @@ const tasks = [
         status: 'new',
         description: 'this is test task 1',
         createDate: '19.10.2023',
-        priority: 'low'
+        priority: 'low',
+        finishDate: '',
+        subtasks: [],
+        comments: [],
+        files: []
     },
     {
         id: 1,
@@ -26,7 +30,11 @@ const tasks = [
         status: 'new',
         description: 'this is test task 2',
         createDate: '19.10.2023',
-        priority: 'high'
+        priority: 'high',
+        finishDate: '',
+        subtasks: [],
+        comments: [],
+        files: []
     }
 ]
 
