@@ -36,7 +36,23 @@ const tasks = [
         finishDate: undefined,
         endDate: undefined,
         startDate: undefined,
-        subtasks: [],
+        subtasks: [
+            {
+                id: 0,
+                name: 'sub1',
+                status: 'new',
+            },
+            {
+                id: 1,
+                name: 'sub2',
+                status: 'in process',
+            },
+            {
+                id: 2,
+                name: 'sub3',
+                status: 'done',
+            },
+        ],
         comments: [],
         files: []
     }
