@@ -24,7 +24,7 @@ const tasks = [
         startDate: undefined,
         subtasks: [],
         comments: [],
-        files: []
+        files: ["testFile.txt"]
     },
     {
         id: 1,

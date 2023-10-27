@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Modal from "./Modal";
 import Subtask from "./Subtask";
+import Files from "./Files";
 
 import './styles.css';
 
@@ -72,6 +73,8 @@ export default function TaskModal(props){
             <p className="text">{props.task.priority}</p>
             {renderInWork()}
             {renderSubtasks()}
+            <p className="text">Files</p>
+            <Files files={props.task.files} />
         </Modal>
     )
 }
