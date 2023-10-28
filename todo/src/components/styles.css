@@ -100,3 +100,32 @@
     margin-left: 10px;
     font-size: 20px;
 }
+
+.commentInput{
+    width: 25dvw;
+    height: 30px;
+    border: 1px solid gainsboro;
+    font-size: 15px;
+    margin-left: 15px;
+}
+
+.commentButton{
+    width: 5dvw;
+    height: 20px;
+    border: 1px solid gainsboro;
+    background-color: ghostwhite;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.commentField{
+    width: 30dvw;
+    border-bottom: 1px solid gainsboro;
+}
+
+.comment{
+    font-size: 15px;
+    color:darkgray;
+    margin-left: 10px;
+}

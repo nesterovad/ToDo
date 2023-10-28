@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import Subtask from "./Subtask";
 import Files from "./Files";
+import Comments from "./Comments";
 
 import './styles.css';
 
@@ -12,7 +13,7 @@ export default function TaskModal(props){
     if(!props.showTask){
         return null;
     }else{
-      
+              
     function renderDate(){
         if(props.task.endDate){
             if(props.task.startDate){
@@ -63,6 +64,14 @@ export default function TaskModal(props){
         )
     }
 
+    function onCommentsUpdate(comments){
+        setTask(props.task);
+       // console.log(task);
+      //  let tmp = task;
+        //tmp.comments = comments;
+       // setTask(tmp);
+    }
+
     return (
         <Modal showModal={props.showTask} onClose={props.onClose}>
             <h4 className="taskHeader">{props.task.name}</h4>
@@ -75,6 +84,8 @@ export default function TaskModal(props){
             {renderSubtasks()}
             <p className="text">Files</p>
             <Files files={props.task.files} />
+            <p className="text">Comments</p>
+            <Comments updateComments={onCommentsUpdate} comments={props.task.comments}/>
         </Modal>
     )
 }
