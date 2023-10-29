@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Modal from "./Modal";
-import Subtask from "./Subtask";
+import {Subtask} from "./Subtask";
 import Files from "./Files";
 import Comments from "./Comments";
 

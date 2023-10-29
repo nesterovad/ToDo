@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import DatePicker from 'react-datepicker';
 
 import Modal from "./Modal";
 
 import './styles.css';
 
+/**
+ * Форма создания и редактирования задачи
+ * @param {object} props - Объект задачи, функция сохранения изменений saveTask, индикатор демонстрации формы showEdit и функция закрытия onClose
+ * @returns {Component} - Окно формы создания и редактирования задачи
+ */
 export default function EditTaskModal(props){
     const [name, setName] = useState(props.task.name);
     const [status, setStatus] = useState(props.task.status);
@@ -131,7 +136,7 @@ export default function EditTaskModal(props){
             <h4 className="taskHeader">{props.task.name ? 'Edit task' : 'New task'}</h4>
             <div className="modalField">
                 <p className="text">Task name</p>
-                <input type="text" className="modalField" value={name} placeholder="Name of the task" onChange={onEditName} />
+                <input type="text" className="modalInput" value={name} placeholder="Name of the task" onChange={onEditName} />
             </div>
             <p className="text">Description</p>
             <textarea className="descriptionArea" placeholder="Description of the task" value={description} onChange={onChangeDescription}/>
@@ -154,6 +159,10 @@ export default function EditTaskModal(props){
             <div className="modalField">
                 <p className="text">Planned finish date</p>
                 <DatePicker selected={dateToDisplay} onChange={onEndDateChange} />
+            </div>
+            <div className="modalField">
+                <p className="text">Finish date</p>
+                <DatePicker selected={dateToDisplay} onChange={onFinishDateChange} />
             </div>
             <div className="modalField">
                 <p className="text">Start date</p>
