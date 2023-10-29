@@ -78,19 +78,41 @@ export default function EditTaskModal(props){
     }
 
     function onSave(){
+        setShowError(false);
         if (finishDate && (status.toUpperCase() !== 'DONE')){
             setShowError(true);
             showErrorMessage('A task with finish date have to have status "done"');
+        }
+        if (finishDate < createDate){
+            setShowError(true);
+            showErrorMessage("Finish date can't be earlier than date of creation");
+        }
+        if (endDate < createDate){
+            setShowError(true);
+            showErrorMessage("Planned finish date can't be earlier than date of creation");
+        }
+        if (startDate < createDate){
+            setShowError(true);
+            showErrorMessage("Date when the task was started can't be earlier than date of creation");
+        }
+        if (startDate && (status.toUpperCase() === 'NEW')){
+            setShowError(true);
+            showErrorMessage("A new task can't have date when it was started");
         }
         let task = {
             id: props.task.id,
             name: name,
             status: status,
             description: description,
-            createDate: props.createDate,
+            createDate: createDate,
             priority: priority,
-            
-        }
+            finishDate: finishDate,
+            endDate: endDate,
+            subtasks: subtasks,
+            comments: comments,
+            files: files,
+        };
+       props.saveTask(task); 
     }
 
     function showErrorMessage(message){
@@ -109,13 +131,38 @@ export default function EditTaskModal(props){
             <h4 className="taskHeader">{props.task.name ? 'Edit task' : 'New task'}</h4>
             <div className="modalField">
                 <p className="text">Task name</p>
-                <input type="text" className="modalField" value={name} placeholder="Name of the task" onChange={setName} />
+                <input type="text" className="modalField" value={name} placeholder="Name of the task" onChange={onEditName} />
             </div>
+            <p className="text">Description</p>
+            <textarea className="descriptionArea" placeholder="Description of the task" value={description} onChange={onChangeDescription}/>
             <p className="text">Status</p>
-            <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
-            <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROPGRESS' ? true : false} onChange={onChangeStatus} />
-            <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
-
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
+                <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROPGRESS' ? true : false} onChange={onChangeStatus} />
+                <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
+            </div>
+            <p className="text">Priority</p>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <input type="radio" name='priority' value='low' checked={priority.toUpperCase() === 'LOW' ? true : false} onChange={onChangePrirority} />
+                <input type="radio" name='priority' value='middle' checked={priority.toUpperCase() === 'MIDDLE' ? true : false} onChange={onChangePrirority} />
+                <input type="radio" name='priority' value='high' checked={priority.toUpperCase() === 'HIGH' ? true : false} onChange={onChangePrirority} />
+            </div>
+            <div className="modalField">
+                <p className="text">Date of creation</p>
+                <DatePicker selected={dateToDisplay} onChange={onCreateDateChange} />
+            </div>
+            <div className="modalField">
+                <p className="text">Planned finish date</p>
+                <DatePicker selected={dateToDisplay} onChange={onEndDateChange} />
+            </div>
+            <div className="modalField">
+                <p className="text">Start date</p>
+                <DatePicker selected={dateToDisplay} onChange={onStartDateChange} />
+            </div>
+            <p className="text">Subtasks</p>
+            <p className="text">Files</p>
+            <p className="text">Comments</p>
+            <button className="modalButton" onClick={onSave}>Save</button>
         </Modal>
     )
     
