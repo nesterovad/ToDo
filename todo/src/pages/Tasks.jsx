@@ -16,6 +16,7 @@ export default function TasksPage(){
     const [search, setSearch] = useState('');
     const [res, setRes] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
+    const [taskToEdit, settaskToEdit] = useState();
 
     function updateTasks(newTasks){
         setFullTasks(newTasks);
@@ -54,11 +55,30 @@ export default function TasksPage(){
         setShowEdit(false);
     }
 
+    function onCreateTask(){
+        let newtask = {
+            id: fullTasks.length,
+            name: undefined,
+            descriprion: undefined,
+            status: 'new',
+            createDate: new Date(),
+            priority: 'low',
+            finishDate: undefined,
+            endDate: undefined,
+            startDate: undefined,
+            subtasks:[],
+            comments:[],
+            files:[]
+        };
+        settaskToEdit(newtask);
+        setShowEdit(true);
+    }
+
     return (
         <>
             <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
-            <EditTaskModal task={fullTasks[0]} showEdit={showEdit} onClose={() => setShowEdit(false)}/>
+            <EditTaskModal task={fullTasks[0]} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
@@ -73,6 +93,7 @@ export default function TasksPage(){
                     </div>
                 </div>  
             </DndProvider>
+            <button onClick = {() => setShowEdit(true)}>New task</button>
         </>
     )
 }
