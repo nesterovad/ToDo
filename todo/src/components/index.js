@@ -3,6 +3,7 @@ import Column from "./Column";
 import Modal from "./Modal";
 import TaskModal from "./TaskModal";
 import { Search, SearchResults } from "./Search";
+import EditTaskModal from "./EditTaskModal";
 
 export {
     TaskPreview,
@@ -11,4 +12,5 @@ export {
     TaskModal,
     Search,
     SearchResults,
+    EditTaskModal,
 }

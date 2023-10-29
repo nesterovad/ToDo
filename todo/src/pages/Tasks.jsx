@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import { Column, TaskModal, Search, SearchResults} from "../components";
+import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../components";
 
 import { tasks } from "../testData";
 
@@ -15,6 +15,7 @@ export default function TasksPage(){
     const [showSearch, setShowSearch] = useState(false);
     const [search, setSearch] = useState('');
     const [res, setRes] = useState([]);
+    const [showEdit, setShowEdit] = useState(false);
 
     function updateTasks(newTasks){
         setFullTasks(newTasks);
@@ -42,10 +43,22 @@ export default function TasksPage(){
         setFullTasks(tmp);
     }
     
+    /**
+     * Сохраняет новую/отредактированную задачу
+     * @param {object} task - Объект отредактированной/новой задачи
+     */
+    function onEditTask(task){
+        let tmp = fullTasks.filter(i => i.id !== task.id);
+        tmp.push(task);
+        setFullTasks(tmp);
+        setShowEdit(false);
+    }
+
     return (
         <>
             <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
+            <EditTaskModal task={fullTasks[0]} showEdit={showEdit} onClose={() => setShowEdit(false)}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
