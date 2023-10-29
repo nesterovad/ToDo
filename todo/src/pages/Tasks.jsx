@@ -33,9 +33,18 @@ export default function TasksPage(){
         setShowSearch(true);
     }
 
+    /**
+     * Удаляет задачу из списка всех задач
+     * @param {number} taskId - id удаляемой задачи 
+     */
+    function onDelete(taskId){
+        let tmp=fullTasks.filter(i => i.id !== taskId);
+        setFullTasks(tmp);
+    }
+    
     return (
         <>
-            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} />
+            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>

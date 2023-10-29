@@ -72,8 +72,16 @@ export default function TaskModal(props){
        // setTask(tmp);
     }
 
+    function onDelete(){
+        props.onClose();
+        props.onDelete(props.task.id);
+    }
+
     return (
         <Modal showModal={props.showTask} onClose={props.onClose}>
+            <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+                <button className="modalButton" onClick={onDelete}>Delete</button>
+            </header>
             <h4 className="taskHeader">{props.task.name}</h4>
             <p className="text">{props.task.id}</p>
             <p className="text">{props.task.description}</p>

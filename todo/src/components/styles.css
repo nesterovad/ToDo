@@ -129,3 +129,11 @@
     color:darkgray;
     margin-left: 10px;
 }
+
+.modalButton{
+    border: 1px solid gainsboro;
+    background-color: ghostwhite;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-right: 10px;
+}
