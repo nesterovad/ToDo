@@ -143,15 +143,35 @@ export default function EditTaskModal(props){
             <textarea className="descriptionArea" placeholder="Description of the task" value={description} onChange={onChangeDescription}/>
             <p className="text">Status</p>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
-                <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROPGRESS' ? true : false} onChange={onChangeStatus} />
-                <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
+                <p className="text">
+                    <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
+                    New
+                </p>
+                <p className="text">
+                    <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROGRESS' ? true : false} onChange={onChangeStatus} />
+                    In progress
+                </p>
+                <p className="text">
+                    <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
+                    Done
+                </p>
+                
             </div>
             <p className="text">Priority</p>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <input type="radio" name='priority' value='low' checked={priority.toUpperCase() === 'LOW' ? true : false} onChange={onChangePrirority} />
-                <input type="radio" name='priority' value='middle' checked={priority.toUpperCase() === 'MIDDLE' ? true : false} onChange={onChangePrirority} />
-                <input type="radio" name='priority' value='high' checked={priority.toUpperCase() === 'HIGH' ? true : false} onChange={onChangePrirority} />
+                <p className="text">
+                    <input type="radio" name='priority' value='low' checked={priority.toUpperCase() === 'LOW' ? true : false} onChange={onChangePrirority} />
+                    Low
+                </p>
+                <p className="text">
+                    <input type="radio" name='priority' value='middle' checked={priority.toUpperCase() === 'MIDDLE' ? true : false} onChange={onChangePrirority} />
+                    Middle
+                </p>
+                <p className="text">
+                    <input type="radio" name='priority' value='high' checked={priority.toUpperCase() === 'HIGH' ? true : false} onChange={onChangePrirority} />
+                    High
+                </p>
+                
             </div>
             <div className="modalField">
                 <p className="text">Date of creation</p>
