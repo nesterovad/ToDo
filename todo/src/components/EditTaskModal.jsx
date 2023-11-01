@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 import Modal from "./Modal";
+import { Subtask, EditSubtask } from "./Subtask";
 
 import './styles.css';
 
@@ -25,6 +26,11 @@ export default function EditTaskModal(props){
     const [showError, setShowError] = useState(false);
     const [finishDate, setFinishDate] = useState(props.task.finishDate);
     const [createDate, setCreateDate] = useState(props.task.createDate);
+    const [subtaskTemplate, setSubtaskTemplate] = useState({
+                                                            id: subtasks.length,
+                                                            name: '',
+                                                            status: 'new'
+                                                            });
 
     function onEditName(e){
         setName(e.target.value);
@@ -50,8 +56,25 @@ export default function EditTaskModal(props){
         setStartDate(date);
     }
 
-    function onSubtasksChange(subtasks){
-        setSubtasks(subtasks);
+    function onSubtasksChange(subs){
+        setSubtasks(subs);
+        setSubtaskTemplate({
+                            id: subtasks.length,
+                            name: '',
+                            status: 'new'
+                            });
+    };
+
+    function onAddSubtasks(subtask){
+        let tmp = subtasks.slice();
+        tmp.push(subtask);
+        onSubtasksChange(tmp);
+    }
+
+    function onChangeSubtask(subtask){
+        let tmp = subtasks.filter(i => i.id !== subtask.id);
+        tmp.push(subtask);
+        onSubtasksChange(tmp);
     }
 
     function onCommentsChange(comment){
@@ -190,6 +213,8 @@ export default function EditTaskModal(props){
                 <DatePicker selected={dateToDisplay} onChange={onStartDateChange} />
             </div>
             <p className="text">Subtasks</p>
+            {subtasks.map(i => <Subtask subtask={i} updateSubtask={onChangeSubtask} />) }
+            <EditSubtask subtask={subtaskTemplate} saveSubtask={onAddSubtasks} />
             <p className="text">Files</p>
             <p className="text">Comments</p>
             <button className="modalButton" onClick={onSave}>Save</button>

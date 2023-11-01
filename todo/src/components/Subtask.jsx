@@ -87,9 +87,19 @@ function EditSubtask(props){
                 <input type="text" className="modalInput" value={name} onChange={onNameChange} placeholder="Name of the subtask" />
             </div>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <input type='radio' name='status' value='new' checked={status === 'new' ? true : false} onChange={onStatusChange} />
-                <input type='radio' name='status' value='in process' checked={status === 'in process' ? true : false} onChange={onStatusChange} />
-                <input type='radio' name='status' value='done' checked={status === 'done' ? true : false} onChange={onStatusChange} />
+                <p className="text">
+                    <input type='radio' name='status' value='new' checked={status === 'new' ? true : false} onChange={onStatusChange} />
+                    New
+                </p>
+                <p className="text">
+                    <input type='radio' name='status' value='in process' checked={status === 'in process' ? true : false} onChange={onStatusChange} />
+                    In process
+                </p>
+                <p className="text">
+                    <input type='radio' name='status' value='done' checked={status === 'done' ? true : false} onChange={onStatusChange} />
+                    Done
+                </p>
+                
             </div>
             <button className="modalButton" onClick={onSave}>Save</button>
         </div>
