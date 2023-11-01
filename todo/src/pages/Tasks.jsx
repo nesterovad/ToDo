@@ -70,6 +70,12 @@ export default function TasksPage(){
         console.log(fullTasks);
     }
 
+    function onToEditTask(id){
+        let task = fullTasks.filter(i => i.id === id);
+        settaskToEdit(task[0]);
+        setShowEdit(true);
+    }
+
     function onCreateTask(){
         let newtask = {
             id: fullTasks.length,
@@ -91,7 +97,7 @@ export default function TasksPage(){
 
     return (
         <>
-            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete}/>
+            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
             <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask}/>
             <Search onSearch={onSearch} />

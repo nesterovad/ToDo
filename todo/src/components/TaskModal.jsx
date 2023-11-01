@@ -77,9 +77,15 @@ export default function TaskModal(props){
         props.onDelete(props.task.id);
     }
 
+    function onEdit(){
+        props.onEdit(props.task.id);
+        props.onClose();
+    }
+
     return (
         <Modal showModal={props.showTask} onClose={props.onClose}>
             <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+                <button className="modalButton" onClick={onEdit}>Edit</button>
                 <button className="modalButton" onClick={onDelete}>Delete</button>
             </header>
             <h4 className="taskHeader">{props.task.name}</h4>

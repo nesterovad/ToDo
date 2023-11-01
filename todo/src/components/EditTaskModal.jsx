@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import Modal from "./Modal";
 import { Subtask, EditSubtask } from "./Subtask";
+import Comments from "./Comments";
 
 import './styles.css';
 
@@ -32,6 +33,7 @@ export default function EditTaskModal(props){
                                                             status: 'new'
                                                             });
 
+    
     function onEditName(e){
         setName(e.target.value);
     }
@@ -79,17 +81,13 @@ export default function EditTaskModal(props){
 
     function onCommentsChange(comment){
         let tmp = comments.slice();
-        let commentObj = {
-            id: comments.length,
-            text: comment
-        };
-        tmp.push(commentObj);
+        tmp.push(comment);
         setComments(tmp);
     }
 
-    function onFileAdd(file){
+    function onFileAdd(e){
         let tmp = files.slice();
-        tmp.push(file);
+        tmp.push(e.target.files[0].name);
         setFiles(tmp);
     }
 
@@ -216,7 +214,10 @@ export default function EditTaskModal(props){
             {subtasks.map(i => <Subtask subtask={i} updateSubtask={onChangeSubtask} />) }
             <EditSubtask subtask={subtaskTemplate} saveSubtask={onAddSubtasks} />
             <p className="text">Files</p>
+            {files.map(i => <p>{i}</p>)}
+            <input type='file' className="modalButton" onChange={onFileAdd}/>
             <p className="text">Comments</p>
+            <Comments comments={comments} updateComments={onCommentsChange} />
             <button className="modalButton" onClick={onSave}>Save</button>
         </Modal>
     )
