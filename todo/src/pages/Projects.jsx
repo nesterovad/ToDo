@@ -50,6 +50,14 @@ export default function Projects(){
         tmp.push(proj);
         setProjects(tmp);
         setShowEdit(false);
+        setProjTemplate({
+            id: projects.length,
+            name: ''
+        });
+    }
+
+    function onAdd(){
+        setShowEdit(true);
     }
 
     return(
@@ -58,6 +66,7 @@ export default function Projects(){
             <div style={{display: 'grid', gridTemplateColumns: '30% 30% 30%'}}>
                 {renderProjects()}
             </div>
+            <button className="button" onClick={onAdd}>Create</button>
         </>
     )
 

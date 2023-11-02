@@ -9,3 +9,9 @@
     width: 30dvw;
     
 }
+
+.button{
+    background-color:ghostwhite;
+    border: 1px solid gainsboro;
+    color:black;
+}
