@@ -14,10 +14,15 @@ export default function Projects(){
     const [projects, setProjects] = useState(projectsData);
     const [showEdit, setShowEdit] = useState(false);
 
+    function onDelete(id){
+        let tmp = projects.filter(i => i.id !== id);
+        setProjects(tmp);
+    }
+
     function renderProjects(){
         return (
             <>
-                {projects.map(i => <Project project={i} />)}
+                {projects.map(i => <Project project={i} onDelete={onDelete} />)}
             </>
         )
     }
