@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
 
-import { projects } from "../testData";
+import { Project } from "../components";
+
+import { projectsData } from "../testData";
 
 import './pages.css';
 
@@ -9,16 +11,21 @@ import './pages.css';
  * @returns {Component}
  */
 export default function Projects(){
-    const [projects, setProjects] = useState(projects);
+    const [projects, setProjects] = useState(projectsData);
+    const [showEdit, setShowEdit] = useState(false);
 
     function renderProjects(){
-
+        return (
+            <>
+                {projects.map(i => <Project project={i} />)}
+            </>
+        )
     }
 
     return(
         <>
-            <div style={{display: 'grid', gridTemplate: '30% 30% 30%'}}>
-
+            <div style={{display: 'grid', gridTemplateColumns: '30% 30% 30%'}}>
+                {renderProjects()}
             </div>
         </>
     )

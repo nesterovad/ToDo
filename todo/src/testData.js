@@ -60,7 +60,7 @@ const tasks = [
     }
 ];
 
-const projects = [
+const projectsData = [
     {
         id: 0,
         name: 'Project1',
@@ -74,5 +74,5 @@ const projects = [
 export {
     shortTasks,
     tasks,
-    projects
+    projectsData
 }
