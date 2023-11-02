@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 
-import { Project } from "../components";
+import { Project, EditProjectModal } from "../components";
 
 import { projectsData } from "../testData";
 
@@ -13,6 +13,10 @@ import './pages.css';
 export default function Projects(){
     const [projects, setProjects] = useState(projectsData);
     const [showEdit, setShowEdit] = useState(false);
+    const [projTemplate, setProjTemplate] = useState({
+                                                        id: projects.length,
+                                                        name: ''
+                                                    });
 
     function onDelete(id){
         let tmp = projects.filter(i => i.id !== id);
@@ -22,13 +26,35 @@ export default function Projects(){
     function renderProjects(){
         return (
             <>
-                {projects.map(i => <Project project={i} onDelete={onDelete} />)}
+                {projects.map(i => <Project project={i} onDelete={onDelete} onEdit={onToEdit}/>)}
             </>
         )
     }
 
+    function onClose(){
+        setShowEdit(false);
+        setProjTemplate({
+            id: projects.length,
+            name: ''
+        });
+    }
+
+    function onToEdit(id){
+        let tmp = projects.filter(i => i.id === id);
+        setProjTemplate(tmp[0]);
+        setShowEdit(true);
+    }
+
+    function onSave(proj){
+        let tmp = projects.filter(i => i.id !== proj.id);
+        tmp.push(proj);
+        setProjects(tmp);
+        setShowEdit(false);
+    }
+
     return(
         <>
+            <EditProjectModal showModal={showEdit} onClose={onClose} project={projTemplate} onSave={onSave} />
             <div style={{display: 'grid', gridTemplateColumns: '30% 30% 30%'}}>
                 {renderProjects()}
             </div>
