@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import TaskModal from "./TaskModal";
 import { Search, SearchResults } from "./Search";
 import EditTaskModal from "./EditTaskModal";
+import Project from "./Project";
 
 export {
     TaskPreview,
@@ -13,4 +14,5 @@ export {
     Search,
     SearchResults,
     EditTaskModal,
+    Project,
 }

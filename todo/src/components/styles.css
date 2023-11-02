@@ -164,3 +164,15 @@
     width: 30dvw;
     height: 20dvh;
 }
+
+.proj{
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+}
+
+.projButton{
+    background-color: aliceblue;
+    border: 1px solid gainsboro;
+}
