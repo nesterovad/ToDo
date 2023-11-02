@@ -13,6 +13,7 @@ const shortTasks = [
 
 const tasks = [
     {
+        projId: 0,
         id: 0,
         name: 'test task 1',
         status: 'new',
@@ -27,6 +28,7 @@ const tasks = [
         files: ["testFile.txt"]
     },
     {
+        projeId: 0,
         id: 1,
         name: 'test task 2',
         status: 'new',
@@ -56,9 +58,21 @@ const tasks = [
         comments: [],
         files: []
     }
+];
+
+const projects = [
+    {
+        id: 0,
+        name: 'Project1',
+    },
+    {
+        id: 1,
+        name: 'Project2',
+    }
 ]
 
 export {
     shortTasks,
-    tasks
+    tasks,
+    projects
 }
