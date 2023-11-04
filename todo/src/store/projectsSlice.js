@@ -14,7 +14,13 @@ const initialState = [
 const projectsSlice = createSlice({
     name: 'projects',
     initialState,
-    reducers: {}
+    reducers: {
+        projectAdded(state, action){
+            state.push(action.payload);
+        },
+    }
 });
+
+export const {projectAdded} = projectsSlice.actions;
 
 export default projectsSlice.reducer;

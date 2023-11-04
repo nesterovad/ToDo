@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { projectAdded } from "../store/projectsSlice";
 
 import Modal from "./Modal";
 
@@ -10,7 +13,18 @@ import './styles.css';
  * @returns 
  */
 export default function EditProjectModal(props){
-    const [name, setName] = useState(props.project.name);
+    const project = useSelector(state => state.projects.find(project => project.id === props.project.id));
+    function initName(){
+        if(project){
+            return project.name;
+        }else{
+            return '';
+        }
+    }
+    const [name, setName] = useState(() => initName());
+    const [isExist] = useState(project => project ? true : false);
+    const dispatch = useDispatch();
+    
 
     if(!props.showModal){
         return null;
@@ -24,13 +38,22 @@ export default function EditProjectModal(props){
         let proj = {
             id: props.project.id,
             name: name
+        };
+        if(isExist){
+
+        }else{
+            dispatch(
+                projectAdded(proj)
+            );
         }
-        props.onSave(proj);
+        setName('');
+        props.onClose();
+        
     }
 
     return (
         <Modal showModal={props.showModal} onClose={props.onClose}>
-            <h4 className="taskHeader">{props.project.name ? 'Edit project' : 'New project'}</h4>
+            <h4 className="taskHeader">{project ? ('Edit project ' + project.name) : 'New project'}</h4>
             <div className="modalField">
                 <p className="text">Project name</p>
                 <input type='text' className="modalInput" value={name}  onChange={onNameChange} />
