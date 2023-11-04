@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import {useSelector} from 'react-redux';
 
 import { Project, EditProjectModal } from "../components";
 
@@ -11,7 +12,8 @@ import './pages.css';
  * @returns {Component}
  */
 export default function Projects(){
-    const [projects, setProjects] = useState(projectsData);
+   // const [projects, setProjects] = useState(projectsData);
+   const projects = useSelector(state => state.projects);
     const [showEdit, setShowEdit] = useState(false);
     const [projTemplate, setProjTemplate] = useState({
                                                         id: projects.length,
@@ -20,7 +22,7 @@ export default function Projects(){
 
     function onDelete(id){
         let tmp = projects.filter(i => i.id !== id);
-        setProjects(tmp);
+       // setProjects(tmp);
     }
 
     function renderProjects(){
@@ -48,7 +50,7 @@ export default function Projects(){
     function onSave(proj){
         let tmp = projects.filter(i => i.id !== proj.id);
         tmp.push(proj);
-        setProjects(tmp);
+        //setProjects(tmp);
         setShowEdit(false);
         setProjTemplate({
             id: projects.length,
