@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { projectAdded } from "../store/projectsSlice";
+import { projectAdded, projectEdited } from "../store/projectsSlice";
 
 import Modal from "./Modal";
 
@@ -22,7 +22,7 @@ export default function EditProjectModal(props){
         }
     }
     const [name, setName] = useState(() => initName());
-    const [isExist] = useState(project => project ? true : false);
+    const [isExist, setIsExist] = useState(props.isEdit);
     const dispatch = useDispatch();
     
 
@@ -39,8 +39,10 @@ export default function EditProjectModal(props){
             id: props.project.id,
             name: name
         };
-        if(isExist){
-
+        if(props.isEdit){
+            dispatch(
+                projectEdited(proj)
+            );
         }else{
             dispatch(
                 projectAdded(proj)

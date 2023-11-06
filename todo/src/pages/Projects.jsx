@@ -19,6 +19,7 @@ export default function Projects(){
                                                         id: projects.length,
                                                         name: ''
                                                     });
+    const [isEdit, setIsEdit] = useState(false);
 
     function onDelete(id){
         let tmp = projects.filter(i => i.id !== id);
@@ -44,27 +45,18 @@ export default function Projects(){
     function onToEdit(id){
         let tmp = projects.filter(i => i.id === id);
         setProjTemplate(tmp[0]);
+        setIsEdit(true);
         setShowEdit(true);
     }
 
-    function onSave(proj){
-        let tmp = projects.filter(i => i.id !== proj.id);
-        tmp.push(proj);
-        //setProjects(tmp);
-        setShowEdit(false);
-        setProjTemplate({
-            id: projects.length,
-            name: ''
-        });
-    }
-
     function onAdd(){
+        setIsEdit(false);
         setShowEdit(true);
     }
 
     return(
         <>
-            <EditProjectModal showModal={showEdit} onClose={onClose} project={projTemplate} onSave={onSave} />
+            <EditProjectModal showModal={showEdit} onClose={onClose} project={projTemplate} isEdit={isEdit}/>
             <div style={{display: 'grid', gridTemplateColumns: '30% 30% 30%'}}>
                 {renderProjects()}
             </div>

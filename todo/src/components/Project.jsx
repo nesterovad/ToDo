@@ -1,6 +1,9 @@
 import React from "react";
 
+import { projectDeleted } from "../store/projectsSlice";
+
 import './styles.css';
+import { useDispatch } from "react-redux";
 
 /**
  * Компонент предпросмотра проекта
@@ -8,8 +11,12 @@ import './styles.css';
  * @returns 
  */
 export default function Project(props){
+    const dispatch = useDispatch();
+
     function onDelete(){
-        props.onDelete(props.project.id);
+        dispatch(
+            projectDeleted(props.project.id)
+        );
     }
 
     function onEdit(){

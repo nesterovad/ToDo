@@ -18,9 +18,18 @@ const projectsSlice = createSlice({
         projectAdded(state, action){
             state.push(action.payload);
         },
+        projectEdited(state, action){
+            let ind = state.findIndex(i => i.id === action.payload.id);
+            state.splice(ind, 1);
+            state.push(action.payload);
+        },
+        projectDeleted(state, action){
+            let ind = state.findIndex(i => i.id === action.payload);
+            state.splice(ind, 1);
+        }
     }
 });
 
-export const {projectAdded} = projectsSlice.actions;
+export const {projectAdded, projectEdited, projectDeleted} = projectsSlice.actions;
 
 export default projectsSlice.reducer;
