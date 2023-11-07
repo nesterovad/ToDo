@@ -1,6 +1,9 @@
 import React, { Component, useState } from "react";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector, useDispatch } from "react-redux";
+
+import { taskAdded } from "../store/tasksSlice";
 
 import Modal from "./Modal";
 import { Subtask, EditSubtask } from "./Subtask";
@@ -32,6 +35,18 @@ export default function EditTaskModal(props){
                                                             name: '',
                                                             status: 'new'
                                                             });
+    const isExist = props.isExist;
+    const dispatch = useDispatch();
+
+    /**
+     * Очищает поля от предыдущего ввода при закрытии
+     */
+    function clear(){
+        setName('');
+        setDescription('');
+        setComments([]);
+        setFiles([]);
+    }
 
     
     function onEditName(e){
@@ -127,6 +142,7 @@ export default function EditTaskModal(props){
             showErrorMessage("A new task can't have date when it was started");
         }
         let task = {
+            projId: 0,
             id: props.task.id,
             name: name,
             status: status,
@@ -139,7 +155,16 @@ export default function EditTaskModal(props){
             comments: comments,
             files: files,
         };
-       props.saveTask(task); 
+        if(isExist){
+
+        }else{
+            dispatch(
+                taskAdded(task)
+            );
+        }
+        props.onClose();
+        clear();
+      // props.saveTask(task); 
     }
 
     function showErrorMessage(message){

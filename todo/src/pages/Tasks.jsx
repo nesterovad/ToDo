@@ -37,6 +37,7 @@ export default function TasksPage(){
         files:[]
     };
     const [taskToEdit, settaskToEdit] = useState(newtask);
+    const [isEdit, setIsEdit] = useState(false);
 
     function updateTasks(newTasks){
         //setFullTasks(newTasks);
@@ -49,11 +50,11 @@ export default function TasksPage(){
     }
 
     function onSearch(text){
-      /*  let res = tasks.filter(i => (i.id.toString() === text) || (i.name === text));
+        let res = tasks.filter(i => (i.id.toString() === text) || (i.name === text));
         setRes(res);
         setSearch(text);
         setShowSearch(true);
-        */
+        
     }
 
     /**
@@ -79,10 +80,10 @@ export default function TasksPage(){
     }
 
     function onToEditTask(id){
-       /* let task = fullTasks.filter(i => i.id === id);
-        settaskToEdit(task[0]);
+        let task = tasks.find(i => i.id === id);
+        settaskToEdit(task);
+        setIsEdit(true);
         setShowEdit(true);
-        */
     }
 
     function onCreateTask(){
@@ -108,7 +109,7 @@ export default function TasksPage(){
         <>
             <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
-            <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask}/>
+            <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask} isExist={isEdit}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
