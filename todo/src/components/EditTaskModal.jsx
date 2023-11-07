@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 
-import { taskAdded } from "../store/tasksSlice";
+import { taskAdded, taskEdited } from "../store/tasksSlice";
 
 import Modal from "./Modal";
 import { Subtask, EditSubtask } from "./Subtask";
@@ -156,7 +156,9 @@ export default function EditTaskModal(props){
             files: files,
         };
         if(isExist){
-
+            dispatch(
+                taskEdited(task)
+            );
         }else{
             dispatch(
                 taskAdded(task)
