@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import { useSelector } from "react-redux";
 
 import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../components";
 
@@ -8,8 +9,13 @@ import { tasks } from "../testData";
 
 import './pages.css';
 
+/**
+ * Страница задач
+ * @returns {Component}
+ */
 export default function TasksPage(){
-    const [fullTasks, setFullTasks] = useState(tasks);
+  //  const [fullTasks, setFullTasks] = useState(tasks);
+    const tasks = useSelector(state => state.tasks.filter(task => task.projId === 0));
     const [showTask, setShowTask] = useState(false);
     const [showId, setShowId] = useState();
     const [showSearch, setShowSearch] = useState(false);
@@ -17,7 +23,7 @@ export default function TasksPage(){
     const [res, setRes] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
     let newtask = {
-        id: fullTasks.length,
+        id: tasks.length,
         name: undefined,
         descriprion: undefined,
         status: 'new',
@@ -33,7 +39,7 @@ export default function TasksPage(){
     const [taskToEdit, settaskToEdit] = useState(newtask);
 
     function updateTasks(newTasks){
-        setFullTasks(newTasks);
+        //setFullTasks(newTasks);
     }
 
     function onToTask(id){
@@ -43,10 +49,11 @@ export default function TasksPage(){
     }
 
     function onSearch(text){
-        let res = fullTasks.filter(i => (i.id.toString() === text) || (i.name === text));
+      /*  let res = tasks.filter(i => (i.id.toString() === text) || (i.name === text));
         setRes(res);
         setSearch(text);
         setShowSearch(true);
+        */
     }
 
     /**
@@ -54,8 +61,8 @@ export default function TasksPage(){
      * @param {number} taskId - id удаляемой задачи 
      */
     function onDelete(taskId){
-        let tmp=fullTasks.filter(i => i.id !== taskId);
-        setFullTasks(tmp);
+       // let tmp=fullTasks.filter(i => i.id !== taskId);
+       // setFullTasks(tmp);
     }
     
     /**
@@ -63,22 +70,24 @@ export default function TasksPage(){
      * @param {object} task - Объект отредактированной/новой задачи
      */
     function onEditTask(task){
-        let tmp = fullTasks.filter(i => i.id !== task.id);
+      /*  let tmp = fullTasks.filter(i => i.id !== task.id);
         tmp.push(task);
         setFullTasks(tmp);
         setShowEdit(false);
         console.log(fullTasks);
+        */
     }
 
     function onToEditTask(id){
-        let task = fullTasks.filter(i => i.id === id);
+       /* let task = fullTasks.filter(i => i.id === id);
         settaskToEdit(task[0]);
         setShowEdit(true);
+        */
     }
 
     function onCreateTask(){
         let newtask = {
-            id: fullTasks.length,
+            id: tasks.length,
             name: undefined,
             descriprion: undefined,
             status: 'new',
@@ -97,20 +106,20 @@ export default function TasksPage(){
 
     return (
         <>
-            <TaskModal showTask = {showTask} task={fullTasks.filter(i => i.id === showId)[0]} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
+            <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
             <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
                     <div className="col">
-                        <Column name = 'New' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'New' tasks={tasks} update={updateTasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'In progress' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'In progress' tasks={tasks} update={updateTasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'Done' tasks={fullTasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'Done' tasks={tasks} update={updateTasks} toTask={onToTask} />
                     </div>
                 </div>  
             </DndProvider>

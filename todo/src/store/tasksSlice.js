@@ -17,7 +17,7 @@ const initialState = [
         files: ["testFile.txt"]
     },
     {
-        projeId: 0,
+        projId: 0,
         id: 1,
         name: 'test task 2',
         status: 'new',
@@ -49,7 +49,7 @@ const initialState = [
     }
 ];
 
-const tasksSlice = createSlice({\
+const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
 
+
 import TaskPreview from "./TaskPreview";
 
 import './styles.css';
 
 export default function Column(props){
-    const [tasks, setTasks] = useState(props.tasks);
+    //const [tasks, setTasks] = useState(props.tasks);
+    const tasks = props.tasks;
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'TASK',
         drop: (item) => update(item.id),
@@ -16,7 +18,7 @@ export default function Column(props){
     }));
 
     function update(id){
-        let newStatus = props.name;
+       /* let newStatus = props.name;
         let updatedTask = tasks.filter(i => i.id === id);
         let tmp = tasks.filter(i => i.id !== id);
         let prevStatus = updatedTask[0].status;
@@ -24,6 +26,7 @@ export default function Column(props){
         let updated = updateDate(updatedTask[0], prevStatus);
         tmp.push(updated);
         props.update(tmp);
+        */
     }
 
     function updateDate(task, prevStatus){
