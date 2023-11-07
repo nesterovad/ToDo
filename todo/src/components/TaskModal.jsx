@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { taskDeleted } from "../store/tasksSlice";
 
 import Modal from "./Modal";
 import {Subtask} from "./Subtask";
@@ -9,6 +12,7 @@ import './styles.css';
 
 export default function TaskModal(props){
     const [task, setTask] = useState(props.task);
+    const dispatch = useDispatch();
 
     if(!props.showTask){
         return null;
@@ -74,7 +78,9 @@ export default function TaskModal(props){
 
     function onDelete(){
         props.onClose();
-        props.onDelete(props.task.id);
+        dispatch(
+            taskDeleted(props.task)
+        );
     }
 
     function onEdit(){
