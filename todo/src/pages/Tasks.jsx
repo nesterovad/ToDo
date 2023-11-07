@@ -104,7 +104,7 @@ export default function TasksPage(){
         settaskToEdit(newtask);
         setShowEdit(true);
     }
-
+    console.log(tasks);
     return (
         <>
             <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
 
+import { taskDropped } from "../store/tasksSlice";
 
 import TaskPreview from "./TaskPreview";
 
@@ -9,6 +11,7 @@ import './styles.css';
 export default function Column(props){
     //const [tasks, setTasks] = useState(props.tasks);
     const tasks = props.tasks;
+    const dispatch = useDispatch();
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'TASK',
         drop: (item) => update(item.id),
@@ -18,15 +21,34 @@ export default function Column(props){
     }));
 
     function update(id){
-       /* let newStatus = props.name;
-        let updatedTask = tasks.filter(i => i.id === id);
-        let tmp = tasks.filter(i => i.id !== id);
-        let prevStatus = updatedTask[0].status;
-        updatedTask[0].status = newStatus;
-        let updated = updateDate(updatedTask[0], prevStatus);
-        tmp.push(updated);
-        props.update(tmp);
-        */
+       let newStatus = props.name;
+        let taskToUpdate = tasks.find(i => i.id === id);
+       // console.log(updatedTask.status);
+       // let tmp = tasks.filter(i => i.id !== id);
+        let prevStatus = taskToUpdate.status;
+       // updatedTask.status = newStatus;
+       let updatedTask = {
+        projId: taskToUpdate.projId,
+        id: taskToUpdate.id,
+        name: taskToUpdate.name,
+        status: newStatus,
+        description: taskToUpdate.description,
+        createDate: taskToUpdate.createDate,
+        priority: taskToUpdate.priority,
+        finishDate: taskToUpdate.finishDate,
+        endDate: taskToUpdate.endDate,
+        startDate: taskToUpdate.startDate,
+        subtasks: taskToUpdate.subtasks,
+        comments: taskToUpdate.comments,
+        files: taskToUpdate.files
+       };
+        let updated = updateDate(updatedTask, prevStatus);
+      //  tmp.push(updated);
+       // props.update(tmp);
+        dispatch(
+           taskDropped(updated)
+        );
+        
     }
 
     function updateDate(task, prevStatus){
