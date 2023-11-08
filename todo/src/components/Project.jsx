@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { projectDeleted } from "../store/projectsSlice";
 
@@ -29,7 +30,7 @@ export default function Project(props){
                 <button className="projButton" onClick={onEdit}>Edit</button>
                 <button className="projButton" onClick={onDelete}>Delete</button>
             </header>
-            <h4 className="taskHeader">{props.project.name}</h4>
+            <Link to="/project" ><h4 className="taskHeader">{props.project.name}</h4></Link>
         </div>
     )
 }
