@@ -30,7 +30,7 @@ export default function Project(props){
                 <button className="projButton" onClick={onEdit}>Edit</button>
                 <button className="projButton" onClick={onDelete}>Delete</button>
             </header>
-            <Link to="/project" ><h4 className="taskHeader">{props.project.name}</h4></Link>
+            <Link to={`/project/${props.project.id}`} ><h4 className="taskHeader">{props.project.name}</h4></Link>
         </div>
     )
 }

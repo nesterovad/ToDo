@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../components";
 
@@ -15,7 +16,10 @@ import './pages.css';
  */
 export default function TasksPage(){
   //  const [fullTasks, setFullTasks] = useState(tasks);
-    const tasks = useSelector(state => state.tasks.filter(task => task.projId === 0));
+    const {id} = useParams();
+    //console.log(id);
+   // console.log(match);
+    const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
     const [showTask, setShowTask] = useState(false);
     const [showId, setShowId] = useState();
     const [showSearch, setShowSearch] = useState(false);
@@ -104,7 +108,7 @@ export default function TasksPage(){
         settaskToEdit(newtask);
         setShowEdit(true);
     }
-    console.log(tasks);
+   // console.log(tasks);
     return (
         <>
             <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
