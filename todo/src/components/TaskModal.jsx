@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { taskDeleted } from "../store/tasksSlice";
+import { taskDeleted, taskEdited } from "../store/tasksSlice";
 
 import Modal from "./Modal";
 import {Subtask} from "./Subtask";
@@ -56,6 +56,9 @@ export default function TaskModal(props){
         let tmp1 = task;
         tmp1.subtasks = tmp;
         setTask(tmp1);
+        dispatch(
+            taskEdited(task)
+        );
     }
 
     function renderSubtasks(){
@@ -70,10 +73,12 @@ export default function TaskModal(props){
 
     function onCommentsUpdate(comments){
         setTask(props.task);
-       // console.log(task);
-      //  let tmp = task;
-        //tmp.comments = comments;
-       // setTask(tmp);
+        let tmp = task;
+        tmp.comments = comments;
+        setTask(tmp);
+        dispatch(
+            taskEdited(task)
+        );
     }
 
     function onDelete(){

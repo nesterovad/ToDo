@@ -22,7 +22,6 @@ export default function EditProjectModal(props){
         }
     }
     const [name, setName] = useState(() => initName());
-    const [isExist, setIsExist] = useState(props.isEdit);
     const dispatch = useDispatch();
     
 

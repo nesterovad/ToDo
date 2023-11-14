@@ -15,10 +15,7 @@ import './pages.css';
  * @returns {Component}
  */
 export default function TasksPage(){
-  //  const [fullTasks, setFullTasks] = useState(tasks);
     const {id} = useParams();
-    //console.log(id);
-   // console.log(match);
     const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
     const [showTask, setShowTask] = useState(false);
     const [showId, setShowId] = useState();
@@ -43,10 +40,6 @@ export default function TasksPage(){
     const [taskToEdit, settaskToEdit] = useState(newtask);
     const [isEdit, setIsEdit] = useState(false);
 
-    function updateTasks(newTasks){
-        //setFullTasks(newTasks);
-    }
-
     function onToTask(id){
         setShowId(id);
         setShowSearch(false);
@@ -59,28 +52,6 @@ export default function TasksPage(){
         setSearch(text);
         setShowSearch(true);
         
-    }
-
-    /**
-     * Удаляет задачу из списка всех задач
-     * @param {number} taskId - id удаляемой задачи 
-     */
-    function onDelete(taskId){
-       // let tmp=fullTasks.filter(i => i.id !== taskId);
-       // setFullTasks(tmp);
-    }
-    
-    /**
-     * Сохраняет новую/отредактированную задачу
-     * @param {object} task - Объект отредактированной/новой задачи
-     */
-    function onEditTask(task){
-      /*  let tmp = fullTasks.filter(i => i.id !== task.id);
-        tmp.push(task);
-        setFullTasks(tmp);
-        setShowEdit(false);
-        console.log(fullTasks);
-        */
     }
 
     function onToEditTask(id){
@@ -108,23 +79,23 @@ export default function TasksPage(){
         settaskToEdit(newtask);
         setShowEdit(true);
     }
-   // console.log(tasks);
+   
     return (
         <>
-            <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onDelete={onDelete} onEdit={onToEditTask}/>
+            <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onEdit={onToEditTask}/>
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
-            <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} saveTask={onEditTask} isExist={isEdit}/>
+            <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} isExist={isEdit}/>
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
                     <div className="col">
-                        <Column name = 'New' tasks={tasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'New' tasks={tasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'In progress' tasks={tasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'In progress' tasks={tasks} toTask={onToTask} />
                     </div>
                     <div className="col">
-                        <Column name = 'Done' tasks={tasks} update={updateTasks} toTask={onToTask} />
+                        <Column name = 'Done' tasks={tasks} toTask={onToTask} />
                     </div>
                 </div>  
             </DndProvider>

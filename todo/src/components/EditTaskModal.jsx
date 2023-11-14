@@ -165,8 +165,7 @@ export default function EditTaskModal(props){
             );
         }
         props.onClose();
-        clear();
-      // props.saveTask(task); 
+        clear(); 
     }
 
     function showErrorMessage(message){

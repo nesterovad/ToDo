@@ -9,7 +9,6 @@ import TaskPreview from "./TaskPreview";
 import './styles.css';
 
 export default function Column(props){
-    //const [tasks, setTasks] = useState(props.tasks);
     const tasks = props.tasks;
     const dispatch = useDispatch();
     const [{isOver}, drop] = useDrop(() => ({
@@ -23,10 +22,7 @@ export default function Column(props){
     function update(id){
        let newStatus = props.name;
         let taskToUpdate = tasks.find(i => i.id === id);
-       // console.log(updatedTask.status);
-       // let tmp = tasks.filter(i => i.id !== id);
         let prevStatus = taskToUpdate.status;
-       // updatedTask.status = newStatus;
        let updatedTask = {
         projId: taskToUpdate.projId,
         id: taskToUpdate.id,
@@ -43,8 +39,6 @@ export default function Column(props){
         files: taskToUpdate.files
        };
         let updated = updateDate(updatedTask, prevStatus);
-      //  tmp.push(updated);
-       // props.update(tmp);
         dispatch(
            taskDropped(updated)
         );
