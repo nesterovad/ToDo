@@ -18,7 +18,7 @@ function projects(action, data){
             //todo: add function call for deleting project
             break;
         case 'update':
-            //todo: add function call for updating project
+            res = updateProject(data);
             break;
         default:
             res = {
@@ -44,6 +44,11 @@ function getProjects(){
     };
 }
 
+/**
+ * Функция сохранения данных нового проекта
+ * @param {object} projData - {name: string}
+ * @returns {object} - {status: string, message: string, data: {id: number}}
+ */
 function createProject(projData){
     let tmp = localStorage.getItem("projects");
     let data = JSON.parse(tmp);
@@ -61,6 +66,24 @@ function createProject(projData){
             id: id
         }
     };
+}
+
+function updateProject(projData){
+    let tmp = localStorage.getItem("projects");
+    let data = JSON.parse(tmp);
+    let proj = data.findIndex(proj => proj.id === projData.id);
+    if (!proj){
+        return {
+            status: '404',
+            message: 'Project not found'
+        }
+    }
+    data.splice(proj, 1, projData);
+    localStorage.setItem("projects", JSON.stringify(data));
+    return {
+        status: '200',
+        message: 'ok'
+    }
 }
 
 export default projects;
