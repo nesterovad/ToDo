@@ -15,7 +15,7 @@ function projects(action, data){
             res = createProject(data);
             break;
         case 'delete':
-            //todo: add function call for deleting project
+            res = deleteProject(data);
             break;
         case 'update':
             res = updateProject(data);
@@ -68,6 +68,11 @@ function createProject(projData){
     };
 }
 
+/**
+ * Функция обновления данных проекта
+ * @param {object} projData - {id: number, name: string}
+ * @returns {object} - {status: string, message: string}
+ */
 function updateProject(projData){
     let tmp = localStorage.getItem("projects");
     let data = JSON.parse(tmp);
@@ -80,6 +85,35 @@ function updateProject(projData){
     }
     data.splice(proj, 1, projData);
     localStorage.setItem("projects", JSON.stringify(data));
+    return {
+        status: '200',
+        message: 'ok'
+    }
+}
+
+/**
+ * Функция удаления проекта и связанных с ним задач
+ * @param {object} projData - {id: number}
+ * @returns {object} - {status: string, message: string}
+ */
+function deleteProject(projData){
+    //удаление данных о проекте
+    let tmp = localStorage.getItem("projects");
+    let data = JSON.parse(tmp);
+    let ind = data.findIndex(proj => proj.id === projData.id);
+    if (!ind){
+        return {
+            status: '404',
+            message: 'Project not found'
+        }
+    }
+    data.splice(ind, 1);
+    localStorage.setItem("projects", JSON.stringify(data));
+    //удаление связанных с ним задач
+    tmp = localStorage.getItem("tasks");
+    data = JSON.parse(tmp);
+    data = data.filter(task => task.projId !== projData.id);
+    localStorage.setItem("tasks", JSON.stringify(data));
     return {
         status: '200',
         message: 'ok'
