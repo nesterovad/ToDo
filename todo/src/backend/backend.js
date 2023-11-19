@@ -1,16 +1,17 @@
+import projects from "./projects";
 
 /**
  * Функция-оболочка для работы с localStorage, эмулирует работу удаленного сервера
  * @param {string} endpoint - точка, к которой выполняется запрос 
- * @param {string} action - тип запроса (get, post, delete, update) 
- * @param {object | undefined} data - необходимые для звпроса данные
+ * @param {string} action - метод запроса (get, post, delete, update) 
+ * @param {object | undefined} data - необходимые для запроса данные
  * @returns {object} - результат выполнения запроса
  */
 function api(endpoint, action, data){
     let res;
     switch (endpoint){
         case 'projects': 
-            //todo: add function call for projects
+            res = projects(action, data);
             break;
         case 'tasks':
             //todo: add function call for tasks
@@ -27,4 +28,6 @@ function api(endpoint, action, data){
     };
     return res;
 
-}
+};
+
+export default api;
