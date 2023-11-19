@@ -12,7 +12,7 @@ function projects(action, data){
             res = getProjects();
             break;
         case 'post':
-            //todo: add functuin call for saving new project
+            res = createProject(data);
             break;
         case 'delete':
             //todo: add function call for deleting project
@@ -35,12 +35,31 @@ function projects(action, data){
  * @returns {object} - {status: string, message: string, data: [{id: number, name: 'string}]}
  */
 function getProjects(){
-    const tmp = localStorage.getItem("projects");
-    const data = JSON.parse(tmp);
+    let tmp = localStorage.getItem("projects");
+    let data = JSON.parse(tmp);
     return {
         status: '200',
         message: 'ok',
         data: data
+    };
+}
+
+function createProject(projData){
+    let tmp = localStorage.getItem("projects");
+    let data = JSON.parse(tmp);
+    let id = data.length;
+    let proj = {
+        id: id,
+        name: projData.name
+    };
+    data.push(proj);
+    localStorage.setItem("projects", JSON.stringify(data));
+    return {
+        status: '200',
+        message: 'ok',
+        data: {
+            id: id
+        }
     };
 }
 
