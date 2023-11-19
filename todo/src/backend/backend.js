@@ -1,5 +1,5 @@
 import projects from "./projects";
-import { tasks } from "./tasks";
+import { tasks, task } from "./tasks";
 
 /**
  * Функция-оболочка для работы с localStorage, эмулирует работу удаленного сервера
@@ -18,7 +18,7 @@ function api(endpoint, action, data){
             res = tasks(action, data);
             break;
         case 'task':
-            //todo: add function call for task
+            res = task(action, data);
             break;
         default:
             res ={
