@@ -35,8 +35,7 @@ function projects(action, data){
  * @returns {object} - {status: string, message: string, data: [{id: number, name: 'string}]}
  */
 function getProjects(){
-    let tmp = localStorage.getItem("projects");
-    let data = JSON.parse(tmp);
+    let data = getProjectsData();
     return {
         status: '200',
         message: 'ok',
@@ -50,15 +49,14 @@ function getProjects(){
  * @returns {object} - {status: string, message: string, data: {id: number}}
  */
 function createProject(projData){
-    let tmp = localStorage.getItem("projects");
-    let data = JSON.parse(tmp);
+    let data = getProjectsData();
     let id = data.length;
     let proj = {
         id: id,
         name: projData.name
     };
     data.push(proj);
-    localStorage.setItem("projects", JSON.stringify(data));
+    setProjectsData(data);
     return {
         status: '200',
         message: 'ok',
@@ -74,8 +72,7 @@ function createProject(projData){
  * @returns {object} - {status: string, message: string}
  */
 function updateProject(projData){
-    let tmp = localStorage.getItem("projects");
-    let data = JSON.parse(tmp);
+    let data = getProjectsData();
     let proj = data.findIndex(proj => proj.id === projData.id);
     if (!proj){
         return {
@@ -84,7 +81,7 @@ function updateProject(projData){
         }
     }
     data.splice(proj, 1, projData);
-    localStorage.setItem("projects", JSON.stringify(data));
+    setProjectsData(data);
     return {
         status: '200',
         message: 'ok'
@@ -98,8 +95,7 @@ function updateProject(projData){
  */
 function deleteProject(projData){
     //удаление данных о проекте
-    let tmp = localStorage.getItem("projects");
-    let data = JSON.parse(tmp);
+    let data = getProjectsData();
     let ind = data.findIndex(proj => proj.id === projData.id);
     if (!ind){
         return {
@@ -108,7 +104,7 @@ function deleteProject(projData){
         }
     }
     data.splice(ind, 1);
-    localStorage.setItem("projects", JSON.stringify(data));
+    setProjectsData(data);
     //удаление связанных с ним задач
     tmp = localStorage.getItem("tasks");
     data = JSON.parse(tmp);
@@ -118,6 +114,15 @@ function deleteProject(projData){
         status: '200',
         message: 'ok'
     }
+}
+
+function getProjectsData(){
+    let tmp = localStorage.getItem("projects");
+    return JSON.parse(tmp);
+}
+
+function setProjectsData(data){
+    localStorage.setItem("projects", JSON.stringify(data));
 }
 
 export default projects;
