@@ -9,7 +9,7 @@ function projects(action, data){
     let res;
     switch (action){
         case 'get':
-            //todo: add function call for getting projects;
+            res = getProjects();
             break;
         case 'post':
             //todo: add functuin call for saving new project
@@ -28,6 +28,20 @@ function projects(action, data){
             break;
     };
     return res;
+}
+
+/**
+ * Функция получения данных всех проектов
+ * @returns {object} - {status: string, message: string, data: [{id: number, name: 'string}]}
+ */
+function getProjects(){
+    const tmp = localStorage.getItem("projects");
+    const data = JSON.parse(tmp);
+    return {
+        status: '200',
+        message: 'ok',
+        data: data
+    };
 }
 
 export default projects;
