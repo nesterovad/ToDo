@@ -30,8 +30,7 @@ function tasks(action, data){
  * @returns {Array} - массив данных задач
  */
 function getTasks(projId){
-    const tmp = localStorage.getItem("tasks");
-    const allTasks = JSON.parse(tmp);
+    const allTasks = getTasksData();
     const tasks = allTasks.filter(item => item.projId === projId).map(task => (
         {
             projId: task.projId,
@@ -65,8 +64,7 @@ function getTasks(projId){
  * @returns {object}
  */
 function updateTasks(task){
-    const tmp = localStorage.getItem("tasks");
-    const tasks = JSON.parse(tmp);
+    const tasks = getTasksData();
     let utask = tasks.filter(item => item.projId === task.projId && item.id === task.id);
     utask = {...utask, 
         status: task.status,
@@ -75,7 +73,7 @@ function updateTasks(task){
     };
     const ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
     tasks.splice(ind, 1, utask);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    setTasksData(tasks);
     return {
         status: '200',
         message: 'ok'
@@ -119,8 +117,7 @@ function task(action, data){
  * @returns {object} - данные задачи или сообщение об ошибке
  */
 function getTask(data){
-    const tmp = localStorage.getItem("tasks");
-    const tasks = JSON.parse(tmp);
+    const tasks = getTasksData();
     const task = tasks.find(item => item.projId === data.projId && item.id === data.id);
     if (!task){
         return {
@@ -141,11 +138,10 @@ function getTask(data){
  * @returns {object}
  */
 function deleteTask(data){
-    const tmp = localStorage.getItem("tasks");
-    const tasks = JSON.parse(tmp);
+    const tasks = getTasksData();
     const ind = tasks.find(item => item.projId === data.projId && item.id === data.id);
     tasks.splice(ind, 1);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    setTasksData(tasks);
     return {
         status: '200',
         message: 'ok'
@@ -158,14 +154,13 @@ function deleteTask(data){
  * @returns {object} - {status: string, message: string, data: {id: number}}
  */
 function createTask(task){
-    const tmp = localStorage.getItem("tasks");
-    let tasks = JSON.parse(tmp);
+    let tasks = getTasksData();
     const id = tasks.length;
     const ntask = {...task,
         id: id
     };
     tasks.push(ntask);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    setTasksData(tasks);
     return {
         status: '200',
         message: 'ok',
@@ -181,8 +176,7 @@ function createTask(task){
  * @returns {object}
  */
 function updateTask(task){
-    const tmp = localStorage.getItem("tasks");
-    let tasks = JSON.parse(tmp);
+    let tasks = getTasksData();
     let ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
     if (!ind){
         return {
@@ -191,12 +185,20 @@ function updateTask(task){
         }
     }
     tasks.splice(ind, 1, task);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    setTasksData(tasks);
     return {
         status: '200',
         message: 'ok'
     }
 }
 
+function getTasksData(){
+    const tmp = localStorage.getItem("tasks");
+    return JSON.parse(tmp);
+}
+
+function setTasksData(data){
+    localStorage.setItem("tasks", JSON.stringify(data));
+}
 
 export {tasks, task};
