@@ -98,7 +98,7 @@ function task(action, data){
             //todo: add function call for creating task
             break;
         case 'delete':
-            //todo: add function call for deleting task
+            res = deleteTask(data);
             break;
         case 'update': 
             //todo: add function call for updating task
@@ -132,6 +132,23 @@ function getTask(data){
         status: '200',
         message: 'ok',
         data: task
+    }
+}
+
+/**
+ * Функция удаления задачи
+ * @param {object} data - {projId: number, id: number}
+ * @returns {object}
+ */
+function deleteTask(data){
+    const tmp = localStorage.getItem("tasks");
+    const tasks = JSON.parse(tmp);
+    const ind = tasks.find(item => item.projId === data.projId && item.id === data.id);
+    tasks.splice(ind, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    return {
+        status: '200',
+        message: 'ok'
     }
 }
 
