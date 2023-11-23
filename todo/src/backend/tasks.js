@@ -95,7 +95,7 @@ function task(action, data){
             res = getTask(data);
             break;
         case 'post':
-            //todo: add function call for creating task
+            res = createTask(data);
             break;
         case 'delete':
             res = deleteTask(data);
@@ -149,6 +149,29 @@ function deleteTask(data){
     return {
         status: '200',
         message: 'ok'
+    }
+}
+
+/**
+ * Функция сохранения данных новой задачи
+ * @param {object} task - объект задачи
+ * @returns {object} - {status: string, message: string, data: {id: number}}
+ */
+function createTask(task){
+    const tmp = localStorage.getItem("tasks");
+    let tasks = JSON.parse(tmp);
+    const id = tasks.length;
+    const ntask = {...task,
+        id: id
+    };
+    tasks.push(ntask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    return {
+        status: '200',
+        message: 'ok',
+        data: {
+            id: id
+        }
     }
 }
 
