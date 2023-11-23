@@ -12,7 +12,7 @@ function tasks(action, data){
             res = getTasks(data);
             break;
         case 'update':
-            //todo: add function call for updatin status 
+            res = updateTasks(data);
             break;
         default:
             res = {
@@ -57,6 +57,29 @@ function getTasks(projId){
         data: tasks
     };
 
+}
+
+/**
+ * Функция обновления задачи в предпросмотре (для drag-n-drop)
+ * @param {object} task - {projId: number, id: number, startDate: Date, finishDate: Date} 
+ * @returns {object}
+ */
+function updateTasks(task){
+    const tmp = localStorage.getItem("tasks");
+    const tasks = JSON.parse(tmp);
+    let utask = tasks.filter(item => item.projId === task.projId && item.id === task.id);
+    utask = {...utask, 
+        status: task.status,
+        startDate: task.startDate,
+        finishDate: task.finishDate,
+    };
+    const ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
+    tasks.splice(ind, 1, utask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    return {
+        status: '200',
+        message: 'ok'
+    }
 }
 
 /**
