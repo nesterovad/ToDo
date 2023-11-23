@@ -92,7 +92,7 @@ function task(action, data){
     let res;
     switch (action){
         case 'get':
-            //todo: add function call for getting task with id and projId
+            res = getTask(data);
             break;
         case 'post':
             //todo: add function call for creating task
@@ -111,6 +111,28 @@ function task(action, data){
             break;
     };
     return res;
+}
+
+/**
+ * Функция получения данных задачи
+ * @param {object} data - {projId: number, id: number}
+ * @returns {object} - данные задачи или сообщение об ошибке
+ */
+function getTask(data){
+    const tmp = localStorage.getItem("tasks");
+    const tasks = JSON.parse(tmp);
+    const task = tasks.find(item => item.projId === data.projId && item.id === data.id);
+    if (!task){
+        return {
+            status: '404',
+            message: 'Task not found'
+        }
+    }
+    return {
+        status: '200',
+        message: 'ok',
+        data: task
+    }
 }
 
 export {tasks, task};
