@@ -101,7 +101,7 @@ function task(action, data){
             res = deleteTask(data);
             break;
         case 'update': 
-            //todo: add function call for updating task
+            res = updateTask(data);
             break;
         default:
             res = {
@@ -174,5 +174,29 @@ function createTask(task){
         }
     }
 }
+
+/**
+ * Функция обновления данных задачи
+ * @param {object} task - объект задачи
+ * @returns {object}
+ */
+function updateTask(task){
+    const tmp = localStorage.getItem("tasks");
+    let tasks = JSON.parse(tmp);
+    let ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
+    if (!ind){
+        return {
+            status: '404',
+            message: 'Task not found'
+        }
+    }
+    tasks.splice(ind, 1, task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    return {
+        status: '200',
+        message: 'ok'
+    }
+}
+
 
 export {tasks, task};
