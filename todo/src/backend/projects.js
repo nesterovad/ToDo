@@ -1,7 +1,7 @@
 
 /**
  * Функция-облочка для взаимодействия с данными проектов в localStorage
- * @param {string} action - метод запроса {get, post, update, delete}
+ * @param {string} action - метод запроса (get)
  * @param {object | undefined} data - необходимые для запроса данные
  * @returns {object} - результат выполнения запроса
  */
@@ -10,15 +10,6 @@ function projects(action, data){
     switch (action){
         case 'get':
             res = getProjects();
-            break;
-        case 'post':
-            res = createProject(data);
-            break;
-        case 'delete':
-            res = deleteProject(data);
-            break;
-        case 'update':
-            res = updateProject(data);
             break;
         default:
             res = {
@@ -43,6 +34,57 @@ function getProjects(){
     };
 }
 
+/**
+ * Функция-оболочка для взаимодействия с данными проекта в localStorage
+ * @param {string} action - метод запроса (get, post, delete, update)
+ * @param {object} data - результат выполнения запроса
+ * @returns 
+ */
+function project(action, data){
+    let res;
+    switch (action){
+        case 'get':
+            res = getProject(data);
+            break;
+        case 'post':
+            res = createProject(data);
+            break;
+        case 'delete':
+            res = deleteProject(data);
+            break;
+        case 'update':
+            res = updateProject(data);
+            break;
+        default: 
+            res = {
+                status: '400',
+                message: 'Invalid method'
+            };
+            break;
+    };
+    return res;
+}
+
+/**
+ * Функция получения данных проекта по id
+ * @param {number} id - идентификатор проекта 
+ * @returns {object}
+ */
+function getProject(id){
+    const data = getProjectsData();
+    const proj = data.find(item => item.id === id);
+    if (!proj){
+        return {
+            status: '404',
+            message: 'Project not found'
+        }
+    }
+    return {
+        status: '200',
+        message: 'ok',
+        data: proj
+    }
+}
 /**
  * Функция сохранения данных нового проекта
  * @param {object} projData - {name: string}
@@ -106,7 +148,7 @@ function deleteProject(projData){
     data.splice(ind, 1);
     setProjectsData(data);
     //удаление связанных с ним задач
-    tmp = localStorage.getItem("tasks");
+    let tmp = localStorage.getItem("tasks");
     data = JSON.parse(tmp);
     data = data.filter(task => task.projId !== projData.id);
     localStorage.setItem("tasks", JSON.stringify(data));
@@ -125,4 +167,4 @@ function setProjectsData(data){
     localStorage.setItem("projects", JSON.stringify(data));
 }
 
-export default projects;
+export {projects, project};

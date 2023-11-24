@@ -1,4 +1,4 @@
-import projects from "./projects";
+import {projects, project} from "./projects";
 import { tasks, task } from "./tasks";
 
 /**
@@ -13,6 +13,9 @@ function api(endpoint, action, data){
     switch (endpoint){
         case 'projects': 
             res = projects(action, data);
+            break;
+        case 'project':
+            res = project(action, data);
             break;
         case 'tasks':
             res = tasks(action, data);
