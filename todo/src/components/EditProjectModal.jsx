@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { projectsAdded } from "../store/projectsSlice";
 
 import { projectAdded, projectEdited } from "../store/projectsSlice";
 
 import Modal from "./Modal";
+
+import api from "../backend/backend";
 
 import './styles.css';
 
@@ -13,17 +16,21 @@ import './styles.css';
  * @returns 
  */
 export default function EditProjectModal(props){
-    const project = useSelector(state => state.projects.find(project => project.id === props.project.id));
-    function initName(){
-        if(project){
-            return project.name;
-        }else{
-            return '';
+    let project = useSelector(state => state.projects.find(project => project.id === props.project.id));
+    if (!project){
+        const tmp = api("project", "get", props.project.id);
+        if (tmp.status === '200'){
+            
+            project = tmp.data;
         }
     }
-    const [name, setName] = useState(() => initName());
+    const [name, setName] = useState(() => {
+        if (props.isEdit){
+            return project.name;
+        }     
+        else return "";
+    });
     const dispatch = useDispatch();
-    
 
     if(!props.showModal){
         return null;
@@ -34,18 +41,25 @@ export default function EditProjectModal(props){
     }
 
     function onSave(){
-        let proj = {
-            id: props.project.id,
-            name: name
-        };
+        
         if(props.isEdit){
+            let proj = {
+                id: project.id,
+                name: name
+            };
             dispatch(
                 projectEdited(proj)
             );
+           let res = api('project', 'update', proj);
         }else{
+            let proj = {
+                
+                name: name
+            };
             dispatch(
                 projectAdded(proj)
             );
+            api('project', 'post', proj);
         }
         setName('');
         props.onClose();

@@ -1,23 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { projectDeleted } from "../store/projectsSlice";
 
+import api from "../backend/backend";
+
 import './styles.css';
-import { useDispatch } from "react-redux";
 
 /**
  * Компонент предпросмотра проекта
  * @param {object} props  - project - объект проекта, onDelete(id) - функция удаления проекта, onEdit(id) - функция перехода к редактированию проекта
  * @returns 
  */
-export default function Project(props){
+export default function Project(props){  
+
     const dispatch = useDispatch();
 
     function onDelete(){
         dispatch(
             projectDeleted(props.project.id)
         );
+        api("project", "delete", props.project);
     }
 
     function onEdit(){

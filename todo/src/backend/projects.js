@@ -27,6 +27,9 @@ function projects(action, data){
  */
 function getProjects(){
     let data = getProjectsData();
+    if (!data){
+        data = [];
+    }
     return {
         status: '200',
         message: 'ok',
@@ -71,7 +74,10 @@ function project(action, data){
  * @returns {object}
  */
 function getProject(id){
-    const data = getProjectsData();
+    let data = getProjectsData();
+    if (!data){
+        data = [];
+    }
     const proj = data.find(item => item.id === id);
     if (!proj){
         return {
@@ -92,6 +98,9 @@ function getProject(id){
  */
 function createProject(projData){
     let data = getProjectsData();
+    if (!data){
+        data = [];
+    }
     let id = data.length;
     let proj = {
         id: id,
@@ -116,7 +125,7 @@ function createProject(projData){
 function updateProject(projData){
     let data = getProjectsData();
     let proj = data.findIndex(proj => proj.id === projData.id);
-    if (!proj){
+    if (proj < 0){
         return {
             status: '404',
             message: 'Project not found'
@@ -139,7 +148,7 @@ function deleteProject(projData){
     //удаление данных о проекте
     let data = getProjectsData();
     let ind = data.findIndex(proj => proj.id === projData.id);
-    if (!ind){
+    if (ind < 0){
         return {
             status: '404',
             message: 'Project not found'
@@ -150,8 +159,10 @@ function deleteProject(projData){
     //удаление связанных с ним задач
     let tmp = localStorage.getItem("tasks");
     data = JSON.parse(tmp);
+    if (data && data.length){
     data = data.filter(task => task.projId !== projData.id);
     localStorage.setItem("tasks", JSON.stringify(data));
+    }
     return {
         status: '200',
         message: 'ok'
