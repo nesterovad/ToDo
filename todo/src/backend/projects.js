@@ -78,7 +78,7 @@ function getProject(id){
     if (!data){
         data = [];
     }
-    const proj = data.find(item => item.id === id);
+    const proj = data.find(item => item.id == id);
     if (!proj){
         return {
             status: '404',

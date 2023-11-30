@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { projectsAdded } from "../store/projectsSlice";
 
 import './pages.css';
+import { Link, useLocation } from "react-router-dom";
 
 /**
  * Страница проектов
@@ -16,6 +17,7 @@ import './pages.css';
  */
 export default function Projects(){
    const dispatch = useDispatch();
+   const location = useLocation();
    let projects = api("projects", "get").data;
    dispatch(
     projectsAdded(projects)
@@ -33,7 +35,7 @@ export default function Projects(){
     function renderProjects(){
         return (
             <>
-                {projects.map(i => <Project project={i} onEdit={onToEdit}/>)}
+                {projects.map(i => <Project project={i} onEdit={onToEdit} location={location}/>)}
             </>
         )
     }
@@ -43,24 +45,24 @@ export default function Projects(){
     }
 
     function onToEdit(id){
-        let tmp = projects.filter(i => i.id === id);
-        setProjTemplate(tmp[0]);
-        setIsEdit(true);
-        setShowEdit(true);
+       // let tmp = projects.filter(i => i.id === id);
+       // setProjTemplate(tmp[0]);
+       // setIsEdit(true);
+       // setShowEdit(true);
     }
 
     function onAdd(){
-        setIsEdit(false);
-        setShowEdit(true);
+       // setIsEdit(false);
+       // setShowEdit(true);
     }
 
     return(
         <>
-            <EditProjectModal showModal={showEdit} onClose={onClose} project={projTemplate} isEdit={isEdit}/>
+            
             <div style={{display: 'grid', gridTemplateColumns: '30% 30% 30%'}}>
                 {renderProjects()}
             </div>
-            <button className="button" onClick={onAdd}>Create</button>
+            <button className="button" onClick={onAdd}><Link to="/createProject/" state={{previousLocation: location}}>Create</Link></button>
         </>
     )
 

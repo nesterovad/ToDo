@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { projectsAdded } from "../store/projectsSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { projectAdded, projectEdited } from "../store/projectsSlice";
 
@@ -16,25 +16,39 @@ import './styles.css';
  * @returns 
  */
 export default function EditProjectModal(props){
-    let project = useSelector(state => state.projects.find(project => project.id === props.project.id));
-    if (!project){
-        const tmp = api("project", "get", props.project.id);
-        if (tmp.status === '200'){
+    const navigate = useNavigate();
+    const id = useParams();
+    let project;
+    if (id.id != undefined){
+        console.log(id);
+        const tmp = api("project", "get", id.id);
+        console.log(tmp);
+       if (tmp.status === '200'){
             
             project = tmp.data;
         }
     }
+   // let project = useSelector(state => state.projects.find(project => project.id === props.project.id));
+   // if (!project){
+    //    const tmp = api("project", "get", props.project.id);
+    //    if (tmp.status === '200'){
+            
+     //       project = tmp.data;
+     //   }
+   // }
+   console.log(project);
     const [name, setName] = useState(() => {
-        if (props.isEdit){
+        if (project){
             return project.name;
         }     
         else return "";
     });
+   
     const dispatch = useDispatch();
 
-    if(!props.showModal){
-        return null;
-    }
+    //if(!props.showModal){
+    //    return null;
+   // }
     
     function onNameChange(e){
         setName(e.target.value);
@@ -65,9 +79,9 @@ export default function EditProjectModal(props){
         props.onClose();
         
     }
-
+    
     return (
-        <Modal showModal={props.showModal} onClose={props.onClose}>
+        <Modal showModal={props.showModal} onClose={() => navigate('/')}>
             <h4 className="taskHeader">{project ? ('Edit project ' + project.name) : 'New project'}</h4>
             <div className="modalField">
                 <p className="text">Project name</p>

@@ -23,10 +23,11 @@
 
 .background{
     width: 100dvw;
-    height: 150dvh;
+    height: 110dvh;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 0;
     position: absolute;
+    top: -10dvh;
     
 }
 
