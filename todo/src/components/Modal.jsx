@@ -4,9 +4,6 @@ import 'scrollable-component';
 import './styles.css';
 
 export default function Modal(props){
-    //if (!props.showModal){
-    //    return null;
-    //}else{
         return (
             <>
                 <div className="background" onClick={props.onClose}/>
@@ -18,5 +15,4 @@ export default function Modal(props){
                 
             </>
         )
-   // }
 }

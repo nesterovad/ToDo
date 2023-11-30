@@ -20,23 +20,12 @@ export default function EditProjectModal(props){
     const id = useParams();
     let project;
     if (id.id != undefined){
-        console.log(id);
         const tmp = api("project", "get", id.id);
-        console.log(tmp);
        if (tmp.status === '200'){
             
             project = tmp.data;
         }
     }
-   // let project = useSelector(state => state.projects.find(project => project.id === props.project.id));
-   // if (!project){
-    //    const tmp = api("project", "get", props.project.id);
-    //    if (tmp.status === '200'){
-            
-     //       project = tmp.data;
-     //   }
-   // }
-   console.log(project);
     const [name, setName] = useState(() => {
         if (project){
             return project.name;
@@ -45,10 +34,6 @@ export default function EditProjectModal(props){
     });
    
     const dispatch = useDispatch();
-
-    //if(!props.showModal){
-    //    return null;
-   // }
     
     function onNameChange(e){
         setName(e.target.value);
@@ -56,7 +41,7 @@ export default function EditProjectModal(props){
 
     function onSave(){
         
-        if(props.isEdit){
+        if(project){
             let proj = {
                 id: project.id,
                 name: name
@@ -76,7 +61,7 @@ export default function EditProjectModal(props){
             api('project', 'post', proj);
         }
         setName('');
-        props.onClose();
+        navigate('/');
         
     }
     
