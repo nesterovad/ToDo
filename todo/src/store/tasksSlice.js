@@ -68,10 +68,13 @@ const tasksSlice = createSlice({
         taskDropped(state, action){
             let ind = state.findIndex(i => (i.id === action.payload.id && i.projId === action.payload.projId));
             state.splice(ind, 1, action.payload);
+        },
+        tasksAdded(state, action){
+            state.concat(action.payload);
         }
     }
 });
 
-export const {taskAdded, taskDeleted, taskEdited, taskDropped} = tasksSlice.actions;
+export const {taskAdded, taskDeleted, taskEdited, taskDropped, tasksAdded} = tasksSlice.actions;
 
 export default tasksSlice.reducer;

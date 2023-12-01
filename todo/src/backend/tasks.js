@@ -31,6 +31,9 @@ function tasks(action, data){
  */
 function getTasks(projId){
     const allTasks = getTasksData();
+    if(!allTasks){
+        allTasks = [];
+    }
     const tasks = allTasks.filter(item => item.projId == projId).map(task => (
         {
             projId: task.projId,

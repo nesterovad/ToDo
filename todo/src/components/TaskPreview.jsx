@@ -19,7 +19,7 @@ export default function TaskPreview(props){
 
     return (
         <div className="taskPreview" ref={drag} onClick={toTask}>
-            <Link to={`project/${props.task.projId}/${props.task.id}`} state={{previousLocation: props.location}}>
+            <Link to={`${props.task.id}`} state={{previousLocation: props.location}}>
                 <h4 className="taskHeader">{props.task.name}</h4>
             </Link>
             

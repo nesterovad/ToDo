@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../components";
@@ -9,6 +9,8 @@ import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../compo
 import { tasks } from "../testData";
 
 import './pages.css';
+import api from "../backend/backend";
+import { tasksAdded } from "../store/tasksSlice";
 
 /**
  * Страница задач
@@ -17,7 +19,7 @@ import './pages.css';
 export default function TasksPage(){
     const {id} = useParams();
     const location = useLocation();
-    const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
+    const dispatch = useDispatch();
     const [showTask, setShowTask] = useState(false);
     const [showId, setShowId] = useState();
     const [showSearch, setShowSearch] = useState(false);
@@ -25,7 +27,7 @@ export default function TasksPage(){
     const [res, setRes] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
     let newtask = {
-        id: tasks.length,
+        
         name: undefined,
         descriprion: undefined,
         status: 'new',
@@ -41,6 +43,17 @@ export default function TasksPage(){
     const [taskToEdit, settaskToEdit] = useState(newtask);
     const [isEdit, setIsEdit] = useState(false);
 
+    let tasks = api("tasks", "get", id);
+    if (tasks.status === '200'){
+        tasks = tasks.data;
+        dispatch(
+            tasksAdded(tasks)
+        );
+    }else{
+        return null;
+    }
+    //const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
+    
     function onToTask(id){
         setShowId(id);
         setShowSearch(false);
