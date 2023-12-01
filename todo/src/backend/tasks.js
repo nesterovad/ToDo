@@ -31,7 +31,7 @@ function tasks(action, data){
  */
 function getTasks(projId){
     const allTasks = getTasksData();
-    const tasks = allTasks.filter(item => item.projId === projId).map(task => (
+    const tasks = allTasks.filter(item => item.projId == projId).map(task => (
         {
             projId: task.projId,
             id: task.id,
@@ -65,7 +65,7 @@ function getTasks(projId){
  */
 function updateTasks(task){
     const tasks = getTasksData();
-    let utask = tasks.filter(item => item.projId === task.projId && item.id === task.id);
+    let utask = tasks.filter(item => item.projId == task.projId && item.id == task.id);
     utask = {...utask, 
         status: task.status,
         startDate: task.startDate,
@@ -118,7 +118,7 @@ function task(action, data){
  */
 function getTask(data){
     const tasks = getTasksData();
-    const task = tasks.find(item => item.projId === data.projId && item.id === data.id);
+    const task = tasks.find(item => item.projId == data.projId && item.id == data.id);
     if (!task){
         return {
             status: '404',
@@ -139,7 +139,7 @@ function getTask(data){
  */
 function deleteTask(data){
     const tasks = getTasksData();
-    const ind = tasks.find(item => item.projId === data.projId && item.id === data.id);
+    const ind = tasks.find(item => item.projId == data.projId && item.id == data.id);
     tasks.splice(ind, 1);
     setTasksData(tasks);
     return {
@@ -155,6 +155,9 @@ function deleteTask(data){
  */
 function createTask(task){
     let tasks = getTasksData();
+    if (!tasks){
+        tasks = [];
+    }
     const id = tasks.length;
     const ntask = {...task,
         id: id
@@ -177,7 +180,7 @@ function createTask(task){
  */
 function updateTask(task){
     let tasks = getTasksData();
-    let ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
+    let ind = tasks.findIndex(item => item.projId == task.projId && item.id == task.id);
     if (!ind){
         return {
             status: '404',

@@ -66,7 +66,7 @@ export default function Column(props){
         return (
             <>
                 {tasks.filter(i => i.status.toUpperCase() === status.toUpperCase()).map(item =>
-                        <TaskPreview task = {item} toTask={props.toTask}/>
+                        <TaskPreview task = {item} toTask={props.toTask} location = {props.location}/>
                     )}
             </>
         )

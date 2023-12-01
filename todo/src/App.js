@@ -4,7 +4,7 @@ import React from 'react';
 import {Routes, Route, useLocation} from 'react-router-dom';
 
 import { TasksPage, Projects } from './pages';
-import { EditProjectModal } from './components';
+import { EditProjectModal, EditTaskModal, TaskPreview } from './components';
 
 function App() {
   const location = useLocation();
@@ -21,6 +21,8 @@ function App() {
           <Routes>
             <Route path="/editProject/:id" element={<EditProjectModal />} />
             <Route path="/createProject/" element={<EditProjectModal />} />
+            <Route path="/project/:id/:taskId" element={<TaskPreview />} />
+            <Route path="/project/:id/createTask" element={<EditTaskModal />} />
           </Routes>
         )}
       </main>

@@ -9,8 +9,12 @@ import Files from "./Files";
 import Comments from "./Comments";
 
 import './styles.css';
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function TaskModal(props){
+    const id = useParams();
+    const navigate = useNavigate();
+    console.log(id);
     const [task, setTask] = useState(props.task);
     const dispatch = useDispatch();
 
@@ -94,7 +98,7 @@ export default function TaskModal(props){
     }
 
     return (
-        <Modal showModal={props.showTask} onClose={props.onClose}>
+        <Modal onClose={() => navigate(`/project/${props.task.projId}`)}>
             <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
                 <button className="modalButton" onClick={onEdit}>Edit</button>
                 <button className="modalButton" onClick={onDelete}>Delete</button>

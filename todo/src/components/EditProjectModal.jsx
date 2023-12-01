@@ -66,7 +66,7 @@ export default function EditProjectModal(props){
     }
     
     return (
-        <Modal showModal={props.showModal} onClose={() => navigate('/')}>
+        <Modal onClose={() => navigate('/')}>
             <h4 className="taskHeader">{project ? ('Edit project ' + project.name) : 'New project'}</h4>
             <div className="modalField">
                 <p className="text">Project name</p>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import { Column, TaskModal, Search, SearchResults, EditTaskModal} from "../components";
 
@@ -16,6 +16,7 @@ import './pages.css';
  */
 export default function TasksPage(){
     const {id} = useParams();
+    const location = useLocation();
     const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
     const [showTask, setShowTask] = useState(false);
     const [showId, setShowId] = useState();
@@ -82,24 +83,24 @@ export default function TasksPage(){
    
     return (
         <>
-            <TaskModal showTask = {showTask} task={tasks.find(i => i.id === showId)} onClose = {() => setShowTask(false)} onEdit={onToEditTask}/>
+           
             <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
-            <EditTaskModal task={taskToEdit} showEdit={showEdit} onClose={() => setShowEdit(false)} isExist={isEdit}/>
+            
             <Search onSearch={onSearch} />
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
                     <div className="col">
-                        <Column name = 'New' tasks={tasks} toTask={onToTask} />
+                        <Column name = 'New' tasks={tasks} toTask={onToTask} location = {location}/>
                     </div>
                     <div className="col">
-                        <Column name = 'In progress' tasks={tasks} toTask={onToTask} />
+                        <Column name = 'In progress' tasks={tasks} toTask={onToTask} location = {location}/>
                     </div>
                     <div className="col">
-                        <Column name = 'Done' tasks={tasks} toTask={onToTask} />
+                        <Column name = 'Done' tasks={tasks} toTask={onToTask} location = {location}/>
                     </div>
                 </div>  
             </DndProvider>
-            <button onClick = {onCreateTask}>New task</button>
+            <button onClick = {onCreateTask}><Link to={`/project/${id}/createTask`} state={{previousLocation: location}}>New task</Link></button>
         </>
     )
 }

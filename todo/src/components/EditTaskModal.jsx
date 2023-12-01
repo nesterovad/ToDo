@@ -10,6 +10,9 @@ import { Subtask, EditSubtask } from "./Subtask";
 import Comments from "./Comments";
 
 import './styles.css';
+import { useNavigate, useParams } from "react-router-dom";
+
+import api from "../backend/backend";
 
 /**
  * Форма создания и редактирования задачи
@@ -17,25 +20,28 @@ import './styles.css';
  * @returns {Component} - Окно формы создания и редактирования задачи
  */
 export default function EditTaskModal(props){
-    const [name, setName] = useState(props.task.name);
-    const [status, setStatus] = useState(props.task.status);
-    const [description, setDescription] = useState(props.task.description);
-    const [priority, setPriority] = useState(props.task.priority);
-    const [endDate, setEndDate] = useState(props.task.endDate);
-    const [startDate, setStartDate] = useState(props.task.startDate);
-    const [subtasks, setSubtasks] = useState(props.task.subtasks);
-    const [comments, setComments] = useState(props.task.comments);
-    const [files, setFiles] = useState(props.task.files);
+    const navigate = useNavigate();
+    const id = useParams();
+    console.log(id);
+    const [name, setName] = useState("");
+    const [status, setStatus] = useState("");
+    const [description, setDescription] = useState("");
+    const [priority, setPriority] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [subtasks, setSubtasks] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [files, setFiles] = useState([]);
     const [dateToDisplay, setDateToDisplay] = useState(new Date());
     const [showError, setShowError] = useState(false);
-    const [finishDate, setFinishDate] = useState(props.task.finishDate);
-    const [createDate, setCreateDate] = useState(props.task.createDate);
+    const [finishDate, setFinishDate] = useState("");
+    const [createDate, setCreateDate] = useState("");
     const [subtaskTemplate, setSubtaskTemplate] = useState({
                                                             id: subtasks.length,
                                                             name: '',
                                                             status: 'new'
                                                             });
-    const isExist = props.isExist;
+    const isExist = false;
     const dispatch = useDispatch();
 
     /**
@@ -142,8 +148,7 @@ export default function EditTaskModal(props){
             showErrorMessage("A new task can't have date when it was started");
         }
         let task = {
-            projId: 0,
-            id: props.task.id,
+            projId: id.id,
             name: name,
             status: status,
             description: description,
@@ -160,11 +165,13 @@ export default function EditTaskModal(props){
                 taskEdited(task)
             );
         }else{
+            let res = api('task', 'post', task);
+            task = {...task, id: res.data.id};
             dispatch(
                 taskAdded(task)
             );
         }
-        props.onClose();
+        navigate(`/project/${id.id}`)
         clear(); 
     }
 
@@ -180,8 +187,8 @@ export default function EditTaskModal(props){
     }
 
     return (
-        <Modal showModal={props.showEdit} onClose={props.onClose}>
-            <h4 className="taskHeader">{props.task.name ? 'Edit task' : 'New task'}</h4>
+        <Modal onClose={() => navigate(`/project/${id.id}`)}>
+            <h4 className="taskHeader">New task</h4>
             <div className="modalField">
                 <p className="text">Task name</p>
                 <input type="text" className="modalInput" value={name} placeholder="Name of the task" onChange={onEditName} />
