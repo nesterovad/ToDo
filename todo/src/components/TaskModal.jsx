@@ -94,11 +94,6 @@ export default function TaskModal(props){
         );
     }
 
-    function onEdit(){
-       // props.onEdit(props.task.id);
-       // props.onClose();
-    }
-
     return (
         <Modal onClose={() => navigate(`/project/${id.id}`)}>
             <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
