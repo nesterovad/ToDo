@@ -68,12 +68,11 @@ function getTasks(projId){
  */
 function updateTasks(task){
     const tasks = getTasksData();
-    let utask = tasks.filter(item => item.projId == task.projId && item.id == task.id);
-    utask = {...utask, 
-        status: task.status,
-        startDate: task.startDate,
-        finishDate: task.finishDate,
-    };
+    let utask = tasks.filter(item => item.projId == task.projId && item.id == task.id)[0];
+    utask["status"] = task.status;
+    utask["startDate"] = task.startDate;
+    utask["finishDate"] = task.finishDate;
+    utask["endDate"] = task.endDate;
     const ind = tasks.findIndex(item => item.projId === task.projId && item.id === task.id);
     tasks.splice(ind, 1, utask);
     setTasksData(tasks);

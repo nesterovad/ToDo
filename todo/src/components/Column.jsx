@@ -7,9 +7,11 @@ import { taskDropped } from "../store/tasksSlice";
 import TaskPreview from "./TaskPreview";
 
 import './styles.css';
+import api from "../backend/backend";
 
 export default function Column(props){
     const tasks = props.tasks;
+   // console.log(tasks);
     const dispatch = useDispatch();
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'TASK',
@@ -28,20 +30,16 @@ export default function Column(props){
         id: taskToUpdate.id,
         name: taskToUpdate.name,
         status: newStatus,
-        description: taskToUpdate.description,
         createDate: taskToUpdate.createDate,
-        priority: taskToUpdate.priority,
         finishDate: taskToUpdate.finishDate,
         endDate: taskToUpdate.endDate,
         startDate: taskToUpdate.startDate,
-        subtasks: taskToUpdate.subtasks,
-        comments: taskToUpdate.comments,
-        files: taskToUpdate.files
        };
         let updated = updateDate(updatedTask, prevStatus);
         dispatch(
            taskDropped(updated)
         );
+        api("tasks", "update", updated);
         
     }
 
