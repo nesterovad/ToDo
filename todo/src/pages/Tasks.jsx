@@ -42,16 +42,12 @@ export default function TasksPage(){
     };
     const [taskToEdit, settaskToEdit] = useState(newtask);
     const [isEdit, setIsEdit] = useState(false);
-
-    let tasks = api("tasks", "get", id);
-    if (tasks.status === '200'){
-        tasks = tasks.data;
+    let tasks = api("tasks", "get", id).data;
         dispatch(
             tasksAdded(tasks)
         );
-    }else{
-        return null;
-    }
+    
+
     //const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
     
     function onToTask(id){

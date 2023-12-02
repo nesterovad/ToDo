@@ -92,6 +92,8 @@ export default function TaskModal(props){
         dispatch(
             taskDeleted(task)
         );
+        api("task", "delete", task);
+        navigate(`/project/${id.id}`);
     }
 
     return (

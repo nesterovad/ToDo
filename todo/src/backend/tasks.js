@@ -47,12 +47,12 @@ function getTasks(projId){
         }
     )
     ) ;
-    if (!tasks.length){
+   /* if (!tasks.length){
         return {
             status: '404',
             message: 'Project does not exist'
         }
-    }
+    }*/
     return {
         status: '200',
         message: 'ok',
