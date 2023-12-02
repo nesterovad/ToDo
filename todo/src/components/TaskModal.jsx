@@ -10,44 +10,46 @@ import Comments from "./Comments";
 
 import './styles.css';
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../backend/backend";
 
 export default function TaskModal(props){
     const id = useParams();
     const navigate = useNavigate();
-    console.log(id);
-    const [task, setTask] = useState(props.task);
     const dispatch = useDispatch();
-
-    if(!props.showTask){
-        return null;
-    }else{
-              
+    const reqData = {
+        projId: id.id,
+        id: id.taskId
+    };
+    const tmp = api("task", "get", reqData);
+    
+    const [task, setTask] = useState(tmp.data);
+            
     function renderDate(){
-        if(props.task.endDate){
-            if(props.task.startDate){
+        if(task.endDate){
+            if(task.startDate){
                 return (
-                    <p className="text">{props.task.startDate.toString()} - {props.task.endDate.toString()}</p>
+                    <p className="text">{task.startDate.toString()} - {task.endDate.toString()}</p>
                 )
             }else{
                 return (
-                    <p className="text">{props.task.createDate.toString()} - {props.task.endDate.toString()}</p>
+                    <p className="text">{task.createDate.toString()} - {task.endDate.toString()}</p>
                 )
             }
-        }else if(props.task.startDate){
+        }else if(task.startDate){
             return (
-                <p className="text">{props.task.startDate.toString()}</p>
+                <p className="text">{task.startDate.toString()}</p>
             )
         }else{
             return (
-                <p className="text">{props.task.createDate.toString()}</p>
+                <p className="text">{task.createDate.toString()}</p>
             )
         }
     }
 
     function renderInWork(){
-        if(props.task.startDate){
+        if(task.startDate){
             let today = new Date();
-            let dif = today - props.task.startDate;
+            let dif = today - task.startDate;
             return (
                 <p className="text">In work for {Math.ceil(dif / (1000 * 60 * 60 * 24))} days</p>
             )
@@ -55,7 +57,7 @@ export default function TaskModal(props){
     }
 
     function updateSubtasks(subtask){
-        let tmp = props.task.subtasks.filter(i => i.id !== subtask.id);
+        let tmp = task.subtasks.filter(i => i.id !== subtask.id);
         tmp.push(subtask);
         let tmp1 = task;
         tmp1.subtasks = tmp;
@@ -69,14 +71,14 @@ export default function TaskModal(props){
         return (
             <>
                 {
-                    props.task.subtasks.map(i => <Subtask subtask={i} updateSubtask={updateSubtasks} />)
+                    task.subtasks.map(i => <Subtask subtask={i} updateSubtask={updateSubtasks} />)
                 }
             </>
         )
     }
 
     function onCommentsUpdate(comments){
-        setTask(props.task);
+        setTask(task);
         let tmp = task;
         tmp.comments = comments;
         setTask(tmp);
@@ -86,36 +88,34 @@ export default function TaskModal(props){
     }
 
     function onDelete(){
-        props.onClose();
         dispatch(
-            taskDeleted(props.task)
+            taskDeleted(task)
         );
     }
 
     function onEdit(){
-        props.onEdit(props.task.id);
-        props.onClose();
+       // props.onEdit(props.task.id);
+       // props.onClose();
     }
 
     return (
-        <Modal onClose={() => navigate(`/project/${props.task.projId}`)}>
+        <Modal onClose={() => navigate(`/project/${id.id}`)}>
             <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
                 <button className="modalButton" onClick={onEdit}>Edit</button>
                 <button className="modalButton" onClick={onDelete}>Delete</button>
             </header>
-            <h4 className="taskHeader">{props.task.name}</h4>
-            <p className="text">{props.task.id}</p>
-            <p className="text">{props.task.description}</p>
+            <h4 className="taskHeader">{task.name}</h4>
+            <p className="text">{task.id}</p>
+            <p className="text">{task.description}</p>
             {renderDate()}
-            <p className="text">{props.task.status}</p>
-            <p className="text">{props.task.priority}</p>
+            <p className="text">{task.status}</p>
+            <p className="text">{task.priority}</p>
             {renderInWork()}
             {renderSubtasks()}
             <p className="text">Files</p>
-            <Files files={props.task.files} />
+            <Files files={task.files} />
             <p className="text">Comments</p>
-            <Comments updateComments={onCommentsUpdate} comments={props.task.comments}/>
+            <Comments updateComments={onCommentsUpdate} comments={task.comments}/>
         </Modal>
     )
-}
 }
