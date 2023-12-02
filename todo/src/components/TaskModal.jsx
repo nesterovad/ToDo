@@ -9,13 +9,14 @@ import Files from "./Files";
 import Comments from "./Comments";
 
 import './styles.css';
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import api from "../backend/backend";
 
 export default function TaskModal(props){
     const id = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     const reqData = {
         projId: id.id,
         id: id.taskId
@@ -101,7 +102,7 @@ export default function TaskModal(props){
     return (
         <Modal onClose={() => navigate(`/project/${id.id}`)}>
             <header style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-                <button className="modalButton" onClick={onEdit}>Edit</button>
+                <button className="modalButton"><Link to={`/project/${id.id}/${id.taskId}/edit`} state={{previousLocation: location.state.previousLocation}} >Edit</Link></button>
                 <button className="modalButton" onClick={onDelete}>Delete</button>
             </header>
             <h4 className="taskHeader">{task.name}</h4>

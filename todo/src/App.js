@@ -23,6 +23,7 @@ function App() {
             <Route path="/createProject/" element={<EditProjectModal />} />
             <Route path="/project/:id/:taskId" element={<TaskModal />} />
             <Route path="/project/:id/createTask" element={<EditTaskModal />} />
+            <Route path="/project/:id/:taskId/edit" element={<EditTaskModal />} />
           </Routes>
         )}
       </main>
