@@ -93,9 +93,9 @@ export default function TasksPage(){
     return (
         <>
            
-            <SearchResults showRes={showSearch} tasks={res} toTask={onToTask} search={search} onClose={() => setShowSearch(false)}/>
             
-            <Search onSearch={onSearch} />
+            
+            <Search onSearch={onSearch} projId={id} location={location}/>
             <DndProvider backend={HTML5Backend}>
                 <div className="wrapper">
                     <div className="col">
