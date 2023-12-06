@@ -25,7 +25,7 @@ export default function Column(props){
        let newStatus = props.name;
         let taskToUpdate = tasks.find(i => i.id === id);
         let prevStatus = taskToUpdate.status;
-       let updatedTask = {
+        let updatedTask = {
         projId: taskToUpdate.projId,
         id: taskToUpdate.id,
         name: taskToUpdate.name,
@@ -64,7 +64,7 @@ export default function Column(props){
         return (
             <>
                 {tasks.filter(i => i.status.toUpperCase() === status.toUpperCase()).map(item =>
-                        <TaskPreview task = {item} toTask={props.toTask} location = {props.location}/>
+                        <TaskPreview task = {item} location = {props.location}/>
                     )}
             </>
         )

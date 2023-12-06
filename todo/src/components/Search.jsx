@@ -8,14 +8,9 @@ import api from "../backend/backend";
 
 function Search(props){
     const [search, setSearch] = useState('');
-    const navigate = useNavigate();
 
     function onChange(e){
         setSearch(e.target.value);
-    }
-
-    function onSearch(){
-       // props.onSearch(search);
     }
 
     return (
@@ -26,7 +21,7 @@ function Search(props){
     )
 }
 
-function SearchResults(props){
+function SearchResults(){
     const id = useParams();
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,34 +31,29 @@ function SearchResults(props){
     }
     const tasks = api("tasks", "post", data).data;
 
-        function showTasks(){
-            return (
-                <>
-                    {tasks.map(i => 
-                        <div className="searchRes">
-                            <Link to={`/project/${id.id}/${i.id}`} state={{previousLocation: location}}>
-                            <h4 className="taskHeader">{i.name}</h4>
-                            </Link>
-                            
-                        </div>
-                        )}
-                </>
-            )
-        }
-
-        function toTask(id){
-            props.toTask(id);
-        }
-
+    function showTasks(){
         return (
             <>
-               <Modal onClose={() => navigate(`/project/${id.id}`)}>
-                    <h4 className="taskHeader">Results for {id.query}</h4>
-                    {showTasks()}
-                </Modal> 
+                {tasks.map(i => 
+                    <div className="searchRes">
+                        <Link to={`/project/${id.id}/${i.id}`} state={{previousLocation: location}}>
+                            <h4 className="taskHeader">{i.name}</h4>
+                        </Link>     
+                    </div>
+                )}
             </>
         )
-    
+    }
+
+    return (
+        <>
+            <Modal onClose={() => navigate(`/project/${id.id}`)}>
+                <h4 className="taskHeader">Results for {id.query}</h4>
+                {showTasks()}
+            </Modal> 
+        </>
+    )
+
 }
 
 export {Search, SearchResults}

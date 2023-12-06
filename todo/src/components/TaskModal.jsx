@@ -12,7 +12,7 @@ import './styles.css';
 import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import api from "../backend/backend";
 
-export default function TaskModal(props){
+export default function TaskModal(){
     const id = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
