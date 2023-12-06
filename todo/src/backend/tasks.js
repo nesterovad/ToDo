@@ -1,4 +1,3 @@
-
 /**
  * Функция-оболочка для взаимодействия с данными задач в localStorage
  * @param {string} action - метод запроса {get, update}
@@ -14,6 +13,9 @@ function tasks(action, data){
         case 'update':
             res = updateTasks(data);
             break;
+        case 'post':
+            res = searchTasks(data);
+            break;
         default:
             res = {
                 status: '400',
@@ -22,6 +24,31 @@ function tasks(action, data){
             break;
     };
     return res;
+}
+
+function searchTasks(data){
+    const allTasks = getTasksData();
+    if(!allTasks){
+        allTasks = [];
+    }
+    const tasks = allTasks.filter(item => (item.projId == data.projId && (item.id == data.search || item.name === data.search))).map(task => (
+        {
+            projId: task.projId,
+            id: task.id,
+            name: task.name,
+            status: task.status,
+            startDate: task.startDate,
+            createdate: task.createdate,
+            finishDate: task.finishDate,
+            endDate: task.endDate
+        }
+    )
+    );
+    return {
+        status: '200',
+        message: 'ok',
+        data: tasks
+    }
 }
 
 /**
