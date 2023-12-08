@@ -63,6 +63,7 @@ export default function TaskModal(){
         let tmp1 = task;
         tmp1.subtasks = tmp;
         setTask(tmp1);
+        api("task", "update", task);
         dispatch(
             taskEdited(task)
         );
@@ -83,6 +84,7 @@ export default function TaskModal(){
         let tmp = task;
         tmp.comments = comments;
         setTask(tmp);
+        api("task", "update", task);
         dispatch(
             taskEdited(task)
         );
