@@ -2,6 +2,11 @@ import React from "react";
 
 import './styles.css';
 
+/**
+ * Компонент файлов. Позволяет просматривать и загружать файлы
+ * @param {object} props - files - массив файлов
+ * @returns 
+ */
 export default function Files(props){
     //because of no server saving files this function downloads a hardcoded file
     function downloadFile(filename){

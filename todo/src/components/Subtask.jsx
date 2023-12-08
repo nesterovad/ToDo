@@ -26,6 +26,10 @@ function Subtask(props){
         props.updateSubtask(tmp);
     }
 
+    /**
+     * Функция отображения статуса поздадачи в виде иконок
+     * @returns 
+     */
     function renderStatus(){
         if (subtask.status === 'new'){
             return (

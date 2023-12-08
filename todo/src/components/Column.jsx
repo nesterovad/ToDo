@@ -9,9 +9,13 @@ import TaskPreview from "./TaskPreview";
 import './styles.css';
 import api from "../backend/backend";
 
+/**
+ * Компонент столбца для страницы задач, участвует в drag-n-drop
+ * @param {object} props -  tasks - массив объектов задач, name - название столбца,  
+ * @returns 
+ */
 export default function Column(props){
     const tasks = props.tasks;
-   // console.log(tasks);
     const dispatch = useDispatch();
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'TASK',
@@ -21,6 +25,10 @@ export default function Column(props){
         }),
     }));
 
+    /**
+     * Функция обновления статуса и дат начала работы/завершения задачи при drag-n-drop
+     * @param {number} id - id задачи для обновления
+     */
     function update(id){
        let newStatus = props.name;
         let taskToUpdate = tasks.find(i => i.id === id);
@@ -43,8 +51,13 @@ export default function Column(props){
         
     }
 
+    /**
+     * Функция изменения дат при смене статуса задачи
+     * @param {object} task - обновляемая задача
+     * @param {string} prevStatus - статус задачи до обновления
+     * @returns 
+     */
     function updateDate(task, prevStatus){
-       
         if ((prevStatus.toUpperCase() === 'DONE') && (task.status.toUpperCase() !== 'DONE')){
             task.finishDate = undefined;
         }
@@ -60,6 +73,11 @@ export default function Column(props){
         return task;
     }
 
+    /**
+     * Функция отображения массива задач
+     * @param {string} status - название столбца, соответствующее статусу отображаемых в нем задач
+     * @returns 
+     */
     function previewTasks(status){
         return (
             <>

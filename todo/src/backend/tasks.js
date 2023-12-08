@@ -26,6 +26,11 @@ function tasks(action, data){
     return res;
 }
 
+/**
+ * Функция поиска задачи по ее id или названию
+ * @param {object} data - {projId: number | string, search: number | string}
+ * @returns {Array[object]} - массив соответстующих запросу задач
+ */
 function searchTasks(data){
     const allTasks = getTasksData();
     if(!allTasks){

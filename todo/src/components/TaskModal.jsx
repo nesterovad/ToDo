@@ -12,6 +12,10 @@ import './styles.css';
 import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import api from "../backend/backend";
 
+/**
+ * Компонент просмотра задачи
+ * @returns 
+ */
 export default function TaskModal(){
     const id = useParams();
     const navigate = useNavigate();
@@ -24,7 +28,11 @@ export default function TaskModal(){
     const tmp = api("task", "get", reqData);
     
     const [task, setTask] = useState(tmp.data);
-            
+    
+    /**
+     * Элемент отображения дат создания, начала работы, ожидаемого завершения
+     * @returns 
+     */
     function renderDate(){
         if(task.endDate){
             if(task.startDate){
@@ -47,6 +55,10 @@ export default function TaskModal(){
         }
     }
 
+    /**
+     * Элемент, отображающий количество дней, в течение которых задача была в работе, для задач со статусом "in progress" и "done"
+     * @returns 
+     */
     function renderInWork(){
         if(task.startDate){
             let today = new Date();
@@ -57,6 +69,10 @@ export default function TaskModal(){
         }
     }
 
+    /**
+     * Функция обновления при изменении подзадач (включая изменение их статуса), выполняет их сохранение
+     * @param {object} subtask - {id: number, name: string, status: "new" | "in progress" | "done"}
+     */
     function updateSubtasks(subtask){
         let tmp = task.subtasks.filter(i => i.id !== subtask.id);
         tmp.push(subtask);
@@ -79,6 +95,10 @@ export default function TaskModal(){
         )
     }
 
+    /**
+     * Функция сохранения новых комментариев
+     * @param {Array[object]} comments 
+     */
     function onCommentsUpdate(comments){
         setTask(task);
         let tmp = task;
@@ -90,6 +110,9 @@ export default function TaskModal(){
         );
     }
 
+    /**
+     * Функция удаления задачи, закрывает модальное окно
+     */
     function onDelete(){
         dispatch(
             taskDeleted(task)

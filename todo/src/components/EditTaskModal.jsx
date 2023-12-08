@@ -128,6 +128,9 @@ export default function EditTaskModal(props){
         setCreateDate(date);
     }
 
+    /**
+     * Функция соххранения новой/отредактированной задачи. После сохранения закрывает модальное окно
+     */
     function onSave(){
         setShowError(false);
         if (finishDate && (status.toUpperCase() !== 'DONE')){

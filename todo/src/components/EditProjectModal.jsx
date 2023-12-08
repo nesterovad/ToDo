@@ -39,8 +39,10 @@ export default function EditProjectModal(props){
         setName(e.target.value);
     }
 
+    /**
+     * Функия сохранения нового/отредактировнного проекта. После выполнения сохранения закрывает можальное окно
+     */
     function onSave(){
-        
         if(project){
             let proj = {
                 id: project.id,
