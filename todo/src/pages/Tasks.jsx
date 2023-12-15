@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import {TouchBackend} from 'react-dnd-touch-backend';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
+import {isMobile} from "react-device-detect";
 
 import { Column, Search} from "../components";
 
@@ -22,14 +24,12 @@ export default function TasksPage(){
         dispatch(
             tasksAdded(tasks)
         );
-    
+    const backend = isMobile ? TouchBackend : HTML5Backend ;
 
-    //const tasks = useSelector(state => state.tasks.filter(task => task.projId == id));
-    
     return (
         <>        
             <Search projId={id} location={location}/>
-            <DndProvider backend={HTML5Backend}>
+            <DndProvider backend={backend}>
                 <div className="wrapper">
                     <div className="col">
                         <Column name = 'New' tasks={tasks} location = {location}/>
