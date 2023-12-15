@@ -128,17 +128,19 @@ export default function TaskModal(){
                 <button className="modalButton" onClick={onDelete}>Delete</button>
             </header>
             <h4 className="taskHeader">{task.name}</h4>
-            <p className="text">{task.id}</p>
-            <p className="text">{task.description}</p>
-            {renderDate()}
-            <p className="text">{task.status}</p>
-            <p className="text">{task.priority}</p>
-            {renderInWork()}
-            {renderSubtasks()}
-            <p className="text">Files</p>
-            <Files files={task.files} />
-            <p className="text">Comments</p>
-            <Comments updateComments={onCommentsUpdate} comments={task.comments}/>
+            <div style={{overflowX:"hidden", overflowY:"auto", height:"75dvh"}}>
+                <p className="text">{task.id}</p>
+                <p className="text">{task.description}</p>
+                {renderDate()}
+                <p className="text">{task.status}</p>
+                <p className="text">{task.priority}</p>
+                {renderInWork()}
+                {renderSubtasks()}
+                <p className="text">Files</p>
+                <Files files={task.files} />
+                <p className="text">Comments</p>
+                <Comments updateComments={onCommentsUpdate} comments={task.comments}/>
+            </div>
         </Modal>
     )
 }

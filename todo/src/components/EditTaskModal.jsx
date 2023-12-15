@@ -197,69 +197,71 @@ export default function EditTaskModal(props){
     return (
         <Modal onClose={() => navigate(`/project/${id.id}`)}>
             <h4 className="taskHeader">{name ? "Edit task " + name : "New task"}</h4>
-            <div className="modalField">
-                <p className="text">Task name</p>
-                <input type="text" className="modalInput" value={name} placeholder="Name of the task" onChange={onEditName} />
+            <div style={{overflowX: "hidden", overflowY: "auto", height: "75dvh"}}>
+                <div className="modalField">
+                    <p className="text">Task name</p>
+                    <input type="text" className="modalInput" value={name} placeholder="Name of the task" onChange={onEditName} />
+                </div>
+                <p className="text">Description</p>
+                <textarea className="descriptionArea" placeholder="Description of the task" value={description} onChange={onChangeDescription}/>
+                <p className="text">Status</p>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <p className="text">
+                        <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
+                        New
+                    </p>
+                    <p className="text">
+                        <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROGRESS' ? true : false} onChange={onChangeStatus} />
+                        In progress
+                    </p>
+                    <p className="text">
+                        <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
+                        Done
+                    </p>
+                    
+                </div>
+                <p className="text">Priority</p>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <p className="text">
+                        <input type="radio" name='priority' value='low' checked={priority.toUpperCase() === 'LOW' ? true : false} onChange={onChangePrirority} />
+                        Low
+                    </p>
+                    <p className="text">
+                        <input type="radio" name='priority' value='middle' checked={priority.toUpperCase() === 'MIDDLE' ? true : false} onChange={onChangePrirority} />
+                        Middle
+                    </p>
+                    <p className="text">
+                        <input type="radio" name='priority' value='high' checked={priority.toUpperCase() === 'HIGH' ? true : false} onChange={onChangePrirority} />
+                        High
+                    </p>
+                    
+                </div>
+                <div className="modalField">
+                    <p className="text">Date of creation</p>
+                    <DatePicker selected={dateToDisplay} onChange={onCreateDateChange} />
+                </div>
+                <div className="modalField">
+                    <p className="text">Planned finish date</p>
+                    <DatePicker selected={dateToDisplay} onChange={onEndDateChange} />
+                </div>
+                <div className="modalField">
+                    <p className="text">Finish date</p>
+                    <DatePicker selected={dateToDisplay} onChange={onFinishDateChange} />
+                </div>
+                <div className="modalField">
+                    <p className="text">Start date</p>
+                    <DatePicker selected={dateToDisplay} onChange={onStartDateChange} />
+                </div>
+                <p className="text">Subtasks</p>
+                {subtasks.map(i => <Subtask subtask={i} updateSubtask={onChangeSubtask} />) }
+                <EditSubtask subtask={subtaskTemplate} saveSubtask={onAddSubtasks} />
+                <p className="text">Files</p>
+                {files.map(i => <p>{i}</p>)}
+                <input type='file' className="modalButton" onChange={onFileAdd}/>
+                <p className="text">Comments</p>
+                <Comments comments={comments} updateComments={onCommentsChange} />
+                <button className="modalButton" onClick={onSave}>Save</button>
             </div>
-            <p className="text">Description</p>
-            <textarea className="descriptionArea" placeholder="Description of the task" value={description} onChange={onChangeDescription}/>
-            <p className="text">Status</p>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <p className="text">
-                    <input type='radio' name='status' value='new' checked={status.toUpperCase() === 'NEW' ? true : false} onChange={onChangeStatus} />
-                    New
-                </p>
-                <p className="text">
-                    <input type='radio' name='status' value='in progress' checked={status.toUpperCase() === 'IN PROGRESS' ? true : false} onChange={onChangeStatus} />
-                    In progress
-                </p>
-                <p className="text">
-                    <input type='radio' name='status' value='done' checked={status.toUpperCase() === 'DONE' ? true : false} onChange={onChangeStatus} />
-                    Done
-                </p>
-                
-            </div>
-            <p className="text">Priority</p>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <p className="text">
-                    <input type="radio" name='priority' value='low' checked={priority.toUpperCase() === 'LOW' ? true : false} onChange={onChangePrirority} />
-                    Low
-                </p>
-                <p className="text">
-                    <input type="radio" name='priority' value='middle' checked={priority.toUpperCase() === 'MIDDLE' ? true : false} onChange={onChangePrirority} />
-                    Middle
-                </p>
-                <p className="text">
-                    <input type="radio" name='priority' value='high' checked={priority.toUpperCase() === 'HIGH' ? true : false} onChange={onChangePrirority} />
-                    High
-                </p>
-                
-            </div>
-            <div className="modalField">
-                <p className="text">Date of creation</p>
-                <DatePicker selected={dateToDisplay} onChange={onCreateDateChange} />
-            </div>
-            <div className="modalField">
-                <p className="text">Planned finish date</p>
-                <DatePicker selected={dateToDisplay} onChange={onEndDateChange} />
-            </div>
-            <div className="modalField">
-                <p className="text">Finish date</p>
-                <DatePicker selected={dateToDisplay} onChange={onFinishDateChange} />
-            </div>
-            <div className="modalField">
-                <p className="text">Start date</p>
-                <DatePicker selected={dateToDisplay} onChange={onStartDateChange} />
-            </div>
-            <p className="text">Subtasks</p>
-            {subtasks.map(i => <Subtask subtask={i} updateSubtask={onChangeSubtask} />) }
-            <EditSubtask subtask={subtaskTemplate} saveSubtask={onAddSubtasks} />
-            <p className="text">Files</p>
-            {files.map(i => <p>{i}</p>)}
-            <input type='file' className="modalButton" onChange={onFileAdd}/>
-            <p className="text">Comments</p>
-            <Comments comments={comments} updateComments={onCommentsChange} />
-            <button className="modalButton" onClick={onSave}>Save</button>
         </Modal>
     )
     
